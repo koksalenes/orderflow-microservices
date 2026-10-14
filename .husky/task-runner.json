@@ -5,10 +5,10 @@
          "name": "pre-commit",
          "group": "pre-commit",
          "command": "bash",
-         "args": [ "-c", "dotnet csharpier format \"$@\" && dotnet format OrderFlow.slnx --include \"$@\" && git add \"$@\"", "--", "${staged}" ],
+         "args": [ "-c", "dotnet format OrderFlow.slnx --include \"$@\" && dotnet csharpier format \"$@\" && git add \"$@\"", "--", "${staged}" ],
          "windows": {
             "command": "powershell",
-            "args": [ "-NoProfile", "-Command", "& { dotnet csharpier format @args; dotnet format OrderFlow.slnx --include @args; git add @args }", "${staged}" ]
+            "args": [ "-NoProfile", "-Command", "& { dotnet format OrderFlow.slnx --include @args; dotnet csharpier format @args; git add @args }", "${staged}" ]
          },
          "include": [ "**/*.cs" ]
       },

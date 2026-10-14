@@ -53,12 +53,12 @@ internal static class OrderEmail
         string Fill(string text)
         {
             return text.Replace("{number}", order.OrderNumber, StringComparison.Ordinal)
-                        .Replace("{invoice}", order.InvoiceNumber ?? string.Empty, StringComparison.Ordinal)
-                        .Replace(
-                            "{reason}",
-                            OrderEmailCopy.Reason(message.ReasonCode, locale),
-                            StringComparison.Ordinal
-                        );
+                .Replace("{invoice}", order.InvoiceNumber ?? string.Empty, StringComparison.Ordinal)
+                .Replace(
+                    "{reason}",
+                    OrderEmailCopy.Reason(message.ReasonCode, locale),
+                    StringComparison.Ordinal
+                );
         }
 
         var failed = status is OrderStatuses.Cancelled or OrderStatuses.Refunded;
