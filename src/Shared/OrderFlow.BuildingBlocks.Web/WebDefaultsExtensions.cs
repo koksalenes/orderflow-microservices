@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using OrderFlow.BuildingBlocks.Web.Cors;
-using OrderFlow.BuildingBlocks.Web.Proxy;
 using OrderFlow.BuildingBlocks.Web.Versioning;
 
 namespace OrderFlow.BuildingBlocks.Web;
@@ -12,7 +11,6 @@ public static class WebDefaultsExtensions
         ArgumentNullException.ThrowIfNull(builder);
 
         builder.AddHttpDefaults();
-        builder.Services.AddTrustedProxy();
         builder.Services.AddCorsPolicy();
         builder.Services.AddApiVersioningDefaults();
 
@@ -23,7 +21,6 @@ public static class WebDefaultsExtensions
     {
         ArgumentNullException.ThrowIfNull(app);
 
-        app.UseForwardedHeaders();
         app.UseHttpDefaults();
         app.UseCors();
 

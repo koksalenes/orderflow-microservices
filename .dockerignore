@@ -13,3 +13,5 @@ docs/
 .env.*
 **/appsettings.*.json
 **/secrets.json
+web/**/dist/
+web/**/dist_keycloak/

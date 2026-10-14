@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <UserSecretsId>orderflow-bff</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" />
+    <PackageReference Include="Yarp.ReverseProxy" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../Shared/OrderFlow.BuildingBlocks.ServiceDefaults/OrderFlow.BuildingBlocks.ServiceDefaults.csproj" />
+    <ProjectReference Include="../../Shared/OrderFlow.BuildingBlocks.Web/OrderFlow.BuildingBlocks.Web.csproj" />
+  </ItemGroup>
+</Project>

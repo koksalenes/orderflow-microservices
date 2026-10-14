@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+using OrderFlow.BuildingBlocks.ServiceDefaults.Correlation;
 
 namespace OrderFlow.BuildingBlocks.Web.Errors;
 
@@ -20,6 +21,11 @@ internal static class ProblemDetailsExtensions
                 problem.Instance ??= http.Request.Path;
                 problem.Extensions["traceId"] =
                     Activity.Current?.TraceId.ToHexString() ?? http.TraceIdentifier;
+
+                if (CorrelationContext.Current is { } correlationId)
+                {
+                    problem.Extensions["correlationId"] = correlationId;
+                }
 
                 if (
                     problem.Type?.StartsWith(

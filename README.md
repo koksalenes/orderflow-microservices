@@ -13,6 +13,11 @@
 [![YARP](https://img.shields.io/badge/YARP-2.3-512BD4?logo=dotnet&logoColor=white)](https://dotnet.github.io/yarp/)
 [![OpenTelemetry](https://img.shields.io/badge/OpenTelemetry-OTLP-425CC7?logo=opentelemetry&logoColor=white)](https://opentelemetry.io/)
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker&logoColor=white)](https://docs.docker.com/compose/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
+[![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-2-764ABC?logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
+[![TanStack](https://img.shields.io/badge/TanStack-Query_%7C_Router-FF4154?logo=reactquery&logoColor=white)](https://tanstack.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-login--03-000000?logo=shadcnui&logoColor=white)](https://ui.shadcn.com/)
 
 </div>
 
@@ -28,7 +33,8 @@ Each step is owned by an independent service with its own database. The services
 
 ```mermaid
 flowchart LR
-    client([Client]) --> gateway[YARP Gateway<br/>routing · rate limiting]
+    browser([Browser]) -- session cookie --> bff[BFF<br/>React app · OIDC · sessions]
+    bff -- bearer token --> gateway[YARP Gateway<br/>routing · rate limiting]
     gateway --> products[Products API]
     gateway --> inventory[Inventory API]
     gateway --> orders[Orders API]
@@ -44,9 +50,11 @@ flowchart LR
 
     products & inventory & orders & payments & notifications <--> bus
 
-    keycloak[(Keycloak<br/>OIDC / JWT)] -.-> gateway
+    keycloak[(Keycloak<br/>OIDC / JWT)] -.-> bff
     aspire[[Aspire Dashboard<br/>traces · metrics · logs]]
 ```
+
+The browser talks only to the **BFF** (Backend for Frontend): it serves the React storefront, signs users in with Keycloak, keeps all tokens on the server, and calls the APIs on the user's behalf. The browser holds nothing but an HttpOnly session cookie.
 
 Every service runs as two containers: an **API** for HTTP traffic and a **Worker** for background processing (outbox publishing, message consumers, saga steps). Both share the same application and infrastructure code; only the host differs.
 
@@ -95,9 +103,11 @@ sequenceDiagram
 | **Saga (orchestration + choreography)** | Orders coordinates the decision phase; the outcome event fans out to every service |
 | **Event Sourcing** | Payments stores every money movement as an event; balances are projections |
 | **Database per service** | Services evolve and scale independently |
+| **Backend for Frontend** | Server-side OIDC session for the web app; tokens never reach the browser; CSRF header, back-channel logout, token refresh |
 | **API Gateway** | YARP-based single entry point with routing, rate limiting, and health-aware load balancing |
-| **Distributed tracing** | One trace id from the gateway through every service, returned as `X-Request-Id` |
+| **Correlation id & distributed tracing** | The edge (BFF or gateway) creates an `X-Correlation-Id` that every service reuses and logs; OpenTelemetry traces span all hops |
 | **RFC 9457 ProblemDetails** | Every error has the same shape with a stable error `code` |
+| **Identity as code** | Keycloak realm, registration with captcha, email verification, and a branded login theme come up ready, with no admin-console setup |
 
 ## Tech stack
 
@@ -107,7 +117,9 @@ sequenceDiagram
 | Persistence | PostgreSQL 18, EF Core 10, Dapper |
 | Messaging | RabbitMQ 4.1 |
 | Caching | Redis 7.2 |
-| Identity | Keycloak 26 (OIDC, JWT) |
+| Identity | Keycloak 26 (OIDC, JWT) with a custom login theme built with Keycloakify, React 19, Tailwind CSS 4, and shadcn/ui |
+| Web app | React 19, TanStack Router, TanStack Query, Redux Toolkit, axios, Tailwind CSS 4, shadcn/ui |
+| BFF | ASP.NET Core, OpenID Connect, Redis session store, YARP |
 | Gateway | YARP 2.3 (ASP.NET Core reverse proxy) |
 | Observability | Serilog, OpenTelemetry, Aspire Dashboard |
 | Containers | Docker, chiseled .NET runtime images (non-root, no shell) |
@@ -118,16 +130,18 @@ sequenceDiagram
 **Requirements:** .NET SDK 10.0.401, Docker with Compose v2, `make`.
 
 ```bash
-make env    # creates .env from .env.example — change the passwords before the first start
+make env    # creates .env from .env.example (secrets are generated) — change the passwords before the first start
 make up     # builds the service images and starts everything; waits until all containers are healthy
 make ps     # lists containers and their health
 ```
 
 | Endpoint | URL |
 |---|---|
+| **Web app (storefront)** | http://localhost:3000 |
 | Gateway (all APIs under `/api/v1/<resource>`) | http://localhost:8000 |
 | Aspire Dashboard (traces, metrics, logs) | http://localhost:18888 |
 | RabbitMQ management | http://localhost:15672 |
+| Sign-in / sign-up page | http://localhost:8080/realms/orderflow/account |
 | Keycloak admin console | http://localhost:8080 |
 | Mailpit (captured emails) | http://localhost:8025 |
 
@@ -135,7 +149,8 @@ make ps     # lists containers and their health
 
 | Command | What it does |
 |---|---|
-| `make up` | Build images and start infrastructure, services, and gateway |
+| `make up` | Build images and start infrastructure, services, gateway, and the web app |
+| `make web-dev` | Run the React app with hot reload on http://localhost:3000 (against a local BFF on :5111) |
 | `make down` | Stop and remove the containers (data volumes are kept) |
 | `make logs s=orders-api` | Follow the logs of one container |
 | `make infra-up` | Start only the infrastructure, to run a service from the IDE |
@@ -156,6 +171,7 @@ dotnet user-secrets set "Database:ConnectionString" \
 ```
 src/
 ├── Shared/                  Building blocks shared by every service (domain primitives, host defaults, web defaults)
+├── Bff/                     Backend for Frontend (sign-in, sessions, API proxy)
 ├── Gateway/                 YARP API gateway
 └── Services/
     └── <Service>/           Products · Inventory · Orders · Payments · Notifications
@@ -165,6 +181,8 @@ src/
         ├── *.Infrastructure
         ├── *.Api
         └── *.Worker
-deploy/                      Dockerfile and Keycloak configuration
+web/app/                     React storefront served by the BFF
+web/keycloak-theme/          Login, registration, password-reset pages and emails (Keycloakify + shadcn/ui)
+deploy/                      Dockerfiles and the Keycloak realm
 scripts/                     Database initialization
 ```

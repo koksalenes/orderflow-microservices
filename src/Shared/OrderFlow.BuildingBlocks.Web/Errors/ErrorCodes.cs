@@ -18,6 +18,8 @@ public static class ErrorCodes
     public const string BadGateway = "gateway.bad_gateway";
     public const string ServiceUnavailable = "gateway.service_unavailable";
     public const string GatewayTimeout = "gateway.timeout";
+    public const string CsrfHeaderMissing = "bff.csrf_header_missing";
+    public const string InvalidLogoutRequest = "bff.invalid_logout_request";
 
     public static string FromStatusCode(int statusCode) =>
         statusCode switch

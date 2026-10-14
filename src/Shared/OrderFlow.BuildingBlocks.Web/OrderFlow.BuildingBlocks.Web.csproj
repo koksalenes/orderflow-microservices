@@ -4,9 +4,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Asp.Versioning.Http" />
-    <PackageReference Include="Serilog.AspNetCore" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="../OrderFlow.BuildingBlocks.Application/OrderFlow.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="../OrderFlow.BuildingBlocks.ServiceDefaults/OrderFlow.BuildingBlocks.ServiceDefaults.csproj" />
   </ItemGroup>
 </Project>

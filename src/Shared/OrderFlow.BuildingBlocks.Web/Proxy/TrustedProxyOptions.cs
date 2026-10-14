@@ -17,6 +17,24 @@ public sealed class TrustedProxyOptions
     /** Single proxy addresses, e.g. "10.201.0.10". */
     public IReadOnlyList<string> KnownProxies { get; init; } = [];
 
+    /** Loopback is always trusted (same machine); otherwise the address must be listed. */
+    public bool IsTrusted(IPAddress? address)
+    {
+        if (address is null)
+        {
+            return false;
+        }
+
+        if (address.IsIPv4MappedToIPv6)
+        {
+            address = address.MapToIPv4();
+        }
+
+        return IPAddress.IsLoopback(address)
+            || KnownProxies.Any(proxy => IPAddress.Parse(proxy).Equals(address))
+            || KnownNetworks.Any(network => IPNetwork.Parse(network).Contains(address));
+    }
+
     internal bool IsValid() =>
         KnownNetworks.All(network => IPNetwork.TryParse(network, out _))
         && KnownProxies.All(proxy => IPAddress.TryParse(proxy, out _));

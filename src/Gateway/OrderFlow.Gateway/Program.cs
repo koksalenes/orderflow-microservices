@@ -1,6 +1,7 @@
 using OrderFlow.BuildingBlocks.ServiceDefaults;
 using OrderFlow.BuildingBlocks.ServiceDefaults.HealthChecks;
 using OrderFlow.BuildingBlocks.Web;
+using OrderFlow.BuildingBlocks.Web.Correlation;
 using OrderFlow.Gateway.Http;
 using OrderFlow.Gateway.RateLimiting;
 
@@ -20,7 +21,7 @@ builder.Services.AddReverseProxy().LoadFromConfig(builder.Configuration.GetSecti
 
 var app = builder.Build();
 
-app.UseHttpDefaults();
+app.UseHttpDefaults(CorrelationIdPolicy.Edge);
 app.UseResponseCompression();
 app.UseRateLimiter();
 app.UseRequestBodyLimit();

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OrderFlow.BuildingBlocks.ServiceDefaults.Correlation;
 using OrderFlow.BuildingBlocks.ServiceDefaults.HealthChecks;
 using OrderFlow.BuildingBlocks.ServiceDefaults.Logging;
 using OrderFlow.BuildingBlocks.ServiceDefaults.Shutdown;
@@ -17,6 +18,7 @@ public static class ServiceDefaultsExtensions
         builder.AddSerilogLogging();
         builder.AddTelemetry();
         builder.Services.AddGracefulShutdown();
+        builder.Services.AddCorrelation();
 
         builder
             .Services.AddHealthChecks()

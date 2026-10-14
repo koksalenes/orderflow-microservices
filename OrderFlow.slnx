@@ -1,5 +1,8 @@
 <Solution>
   <Folder Name="/src/" />
+  <Folder Name="/src/Bff/">
+    <Project Path="src/Bff/OrderFlow.Bff/OrderFlow.Bff.csproj" />
+  </Folder>
   <Folder Name="/src/Gateway/">
     <Project Path="src/Gateway/OrderFlow.Gateway/OrderFlow.Gateway.csproj" />
   </Folder>

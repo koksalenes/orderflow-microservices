@@ -76,7 +76,10 @@ services:
     restart: unless-stopped
 
   keycloak:
-    image: quay.io/keycloak/keycloak:26.6.0
+    image: orderflow/keycloak:local
+    build:
+      context: .
+      dockerfile: deploy/keycloak/Dockerfile
     profiles: [infra]
     command: ["start-dev", "--import-realm"]
     environment:
@@ -87,11 +90,14 @@ services:
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
       KC_HEALTH_ENABLED: "true"
+      KC_HOSTNAME: http://localhost:${KEYCLOAK_PORT:-8080}
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: "true"
+      KEYCLOAK_BFF_CLIENT_SECRET: ${KEYCLOAK_BFF_CLIENT_SECRET:?set KEYCLOAK_BFF_CLIENT_SECRET in .env (make env)}
       KC_HTTP_PORT: "8080"
     ports:
       - "${KEYCLOAK_PORT:-8080}:8080"
     volumes:
-      - ./deploy/keycloak:/opt/keycloak/data/import:ro
+      - ./deploy/keycloak/import:/opt/keycloak/data/import:ro
     depends_on:
       postgres:
         condition: service_healthy
@@ -145,6 +151,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: ${APP_ENVIRONMENT:-Production}
       OTEL_EXPORTER_OTLP_ENDPOINT: http://aspire-dashboard:18889
+      TrustedProxy__KnownProxies__0: ${BFF_IP:-10.201.0.11}
       ReverseProxy__Clusters__products__Destinations__primary__Address: http://products-api:8080
       ReverseProxy__Clusters__inventory__Destinations__primary__Address: http://inventory-api:8080
       ReverseProxy__Clusters__orders__Destinations__primary__Address: http://orders-api:8080
@@ -155,6 +162,35 @@ services:
     networks:
       default:
         ipv4_address: ${GATEWAY_IP:-10.201.0.10}
+
+  bff:
+    profiles: [apps]
+    image: orderflow/bff:local
+    build:
+      context: .
+      dockerfile: deploy/bff/Dockerfile
+    restart: unless-stopped
+    stop_grace_period: 40s
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${APP_ENVIRONMENT:-Production}
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://aspire-dashboard:18889
+      Oidc__Authority: http://localhost:${KEYCLOAK_PORT:-8080}/realms/orderflow
+      Oidc__MetadataAddress: http://keycloak:8080/realms/orderflow/.well-known/openid-configuration
+      Oidc__ClientSecret: ${KEYCLOAK_BFF_CLIENT_SECRET:?set KEYCLOAK_BFF_CLIENT_SECRET in .env (make env)}
+      Oidc__RequireHttpsMetadata: "false"
+      Redis__ConnectionString: redis:6379,password=${REDIS_PASSWORD}
+      ReverseProxy__Clusters__gateway__Destinations__primary__Address: http://gateway:8080
+    ports:
+      - "${WEB_PORT:-3000}:8080"
+    networks:
+      default:
+        ipv4_address: ${BFF_IP:-10.201.0.11}
+    depends_on:
+      redis:
+        condition: service_healthy
+      keycloak:
+        condition: service_healthy
+
 
   products-api:
     <<: *app
