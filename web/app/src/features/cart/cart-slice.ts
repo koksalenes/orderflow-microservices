@@ -5,6 +5,8 @@ export type CartItem = { productId: string; quantity: number };
 
 type CartState = { items: CartItem[] };
 
+export const maxQuantityPerLine = 10;
+
 export const cartSlice = createSlice({
     name: "cart",
     initialState: (): CartState => ({ items: readStorage<CartItem[]>("cart.items") ?? [] }),
@@ -13,9 +15,16 @@ export const cartSlice = createSlice({
             const { productId, quantity = 1 } = action.payload;
             const existing = state.items.find(item => item.productId === productId);
             if (existing) {
-                existing.quantity += quantity;
+                existing.quantity = Math.min(maxQuantityPerLine, existing.quantity + quantity);
             } else {
-                state.items.push({ productId, quantity });
+                state.items.push({ productId, quantity: Math.min(maxQuantityPerLine, quantity) });
+            }
+        },
+        quantitySet(state, action: PayloadAction<{ productId: string; quantity: number }>) {
+            const { productId, quantity } = action.payload;
+            const existing = state.items.find(item => item.productId === productId);
+            if (existing) {
+                existing.quantity = Math.max(1, Math.min(maxQuantityPerLine, quantity));
             }
         },
         itemRemoved(state, action: PayloadAction<string>) {
@@ -30,5 +39,5 @@ export const cartSlice = createSlice({
     }
 });
 
-export const { itemAdded, itemRemoved, cleared } = cartSlice.actions;
+export const { itemAdded, quantitySet, itemRemoved, cleared } = cartSlice.actions;
 export const { selectItemCount } = cartSlice.selectors;

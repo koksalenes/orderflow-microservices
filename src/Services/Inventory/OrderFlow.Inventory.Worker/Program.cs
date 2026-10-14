@@ -11,11 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 builder.Services.AddInventoryInfrastructure();
+builder.Services.AddInventoryMessaging();
 
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
+await app.Services.WaitForInventoryDatabaseAsync();
 await app.RunAsync();
 
 return 0;

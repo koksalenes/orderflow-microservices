@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { ArrowDownLeft, Loader2, ReceiptText, Undo2 } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { ArrowDownLeft, Loader2, ReceiptText, RotateCcw, ShoppingBag, Undo2 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "@/i18n/use-translation";
@@ -44,22 +45,39 @@ export function TransactionList() {
 
 function TransactionRow({ item }: { item: WalletTransaction }) {
     const { t, locale } = useTranslation();
-    const reversal = item.type === "reversal";
     const reversed = item.status === "reversed";
+    const debit = item.amount < 0;
+    const label = {
+        deposit: t("wallet.history.deposit"),
+        reversal: t("wallet.history.reversal"),
+        payment: t("wallet.history.payment"),
+        refund: t("wallet.history.refund")
+    }[item.type];
+    const Icon = { deposit: ArrowDownLeft, reversal: Undo2, payment: ShoppingBag, refund: RotateCcw }[item.type];
 
     return (
         <li className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
             <span
                 className={cn(
                     "flex size-9 shrink-0 items-center justify-center rounded-full",
-                    reversal ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"
+                    debit ? "bg-red-50 text-red-700" : "bg-emerald-50 text-emerald-700"
                 )}
             >
-                {reversal ? <Undo2 className="size-4" /> : <ArrowDownLeft className="size-4" />}
+                <Icon className="size-4" />
             </span>
             <div className="min-w-0 flex-1">
                 <p className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium">
-                    {reversal ? t("wallet.history.reversal") : t("wallet.history.deposit")}
+                    {label}
+                    {item.referenceId !== null && (item.type === "payment" || item.type === "refund") && (
+                        <Link
+                            to="/orders/$orderId"
+                            params={{ orderId: item.referenceId }}
+                            search={{}}
+                            className="font-normal text-primary hover:underline"
+                        >
+                            {t("wallet.history.viewOrder")}
+                        </Link>
+                    )}
                     {item.cardLast4 !== null && (
                         <span className="font-normal text-muted-foreground">
                             {item.cardBrand} •••• {item.cardLast4}
@@ -80,11 +98,11 @@ function TransactionRow({ item }: { item: WalletTransaction }) {
                 <p
                     className={cn(
                         "text-sm font-semibold",
-                        reversal ? "text-red-700" : "text-emerald-700",
+                        debit ? "text-red-700" : "text-emerald-700",
                         reversed && "text-muted-foreground line-through"
                     )}
                 >
-                    {reversal ? "−" : "+"}
+                    {debit ? "−" : "+"}
                     {formatPrice(Math.abs(item.amount), item.currency, locale)}
                 </p>
                 <p className="text-xs text-muted-foreground">

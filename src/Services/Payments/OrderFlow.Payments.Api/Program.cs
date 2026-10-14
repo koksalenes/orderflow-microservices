@@ -3,6 +3,7 @@ using OrderFlow.BuildingBlocks.ServiceDefaults.HealthChecks;
 using OrderFlow.BuildingBlocks.Web;
 using OrderFlow.BuildingBlocks.Web.Authentication;
 using OrderFlow.BuildingBlocks.Web.Versioning;
+using OrderFlow.Payments.Api.CardPayments;
 using OrderFlow.Payments.Api.Wallets;
 using OrderFlow.Payments.Infrastructure;
 
@@ -23,7 +24,7 @@ var app = builder.Build();
 app.UseWebDefaults();
 app.UseJwtAuthentication();
 app.MapDefaultEndpoints();
-app.MapVersionedGroup("payments").MapWalletEndpoints();
+app.MapVersionedGroup("payments").MapWalletEndpoints().MapCardPaymentEndpoints();
 
 await app.Services.MigratePaymentsDatabaseAsync();
 await app.RunAsync();

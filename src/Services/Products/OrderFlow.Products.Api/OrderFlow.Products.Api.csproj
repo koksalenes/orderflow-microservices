@@ -3,6 +3,16 @@
     <UserSecretsId>orderflow-products</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf
+      Include="../OrderFlow.Products.Contracts/Protos/product_catalog.proto"
+      GrpcServices="Server"
+      Link="Protos/product_catalog.proto"
+    />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../OrderFlow.Products.Infrastructure/OrderFlow.Products.Infrastructure.csproj" />
     <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.ServiceDefaults/OrderFlow.BuildingBlocks.ServiceDefaults.csproj" />
     <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.Web/OrderFlow.BuildingBlocks.Web.csproj" />

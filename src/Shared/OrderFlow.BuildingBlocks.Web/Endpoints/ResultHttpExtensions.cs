@@ -16,6 +16,19 @@ public static class ResultHttpExtensions
         return result.IsSuccess ? TypedResults.Ok(result.Value) : result.Error!.ToProblem();
     }
 
+    public static Results<Created<T>, ProblemHttpResult> ToCreatedHttpResult<T>(
+        this Result<T> result,
+        Func<T, string> location
+    )
+    {
+        ArgumentNullException.ThrowIfNull(result);
+        ArgumentNullException.ThrowIfNull(location);
+
+        return result.IsSuccess
+            ? TypedResults.Created(new Uri(location(result.Value), UriKind.Relative), result.Value)
+            : result.Error!.ToProblem();
+    }
+
     public static ProblemHttpResult ToProblem(this Error error)
     {
         ArgumentNullException.ThrowIfNull(error);

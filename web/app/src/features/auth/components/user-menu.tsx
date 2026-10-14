@@ -65,8 +65,10 @@ export function UserMenu() {
                         <WalletCards /> {t("wallet.nav")}
                     </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem disabled>
-                    <PackageOpen /> {t("nav.orders")}
+                <DropdownMenuItem asChild>
+                    <Link to="/orders" search={{ page: 1 }}>
+                        <PackageOpen /> {t("nav.orders")}
+                    </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem variant="destructive" onSelect={() => signOut(session)}>

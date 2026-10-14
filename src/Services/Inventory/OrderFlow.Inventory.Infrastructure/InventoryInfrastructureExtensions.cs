@@ -1,12 +1,16 @@
 using Microsoft.Extensions.DependencyInjection;
 using OrderFlow.BuildingBlocks.Application.Messaging;
+using OrderFlow.BuildingBlocks.Infrastructure.Messaging;
 using OrderFlow.BuildingBlocks.Infrastructure.Persistence;
 using OrderFlow.Inventory.Application;
+using OrderFlow.Inventory.Application.Reservations;
 using OrderFlow.Inventory.Application.Stock;
 using OrderFlow.Inventory.Application.Stock.GetStockLevel;
 using OrderFlow.Inventory.Application.Stock.GetStockLevels;
+using OrderFlow.Inventory.Contracts.Reservations;
 using OrderFlow.Inventory.Infrastructure.Persistence;
 using OrderFlow.Inventory.Infrastructure.Persistence.Seed;
+using OrderFlow.Inventory.Infrastructure.Reservations;
 using OrderFlow.Inventory.Infrastructure.Stock.GetStockLevel;
 using OrderFlow.Inventory.Infrastructure.Stock.GetStockLevels;
 
@@ -32,8 +36,35 @@ public static class InventoryInfrastructureExtensions
         >();
         services.AddQueryHandler<GetStockLevelQuery, StockLevelDto, GetStockLevelQueryHandler>();
 
+        services.AddUnitOfWork<InventoryDbContext>();
+        services.AddScoped<IInventoryRepository, EfInventoryRepository>();
+
         return services;
     }
+
+    public static IServiceCollection AddInventoryMessaging(this IServiceCollection services)
+    {
+        services.AddOutboxPublisher();
+        services.AddIntegrationConsumer<ReserveStock>(
+            ReserveStock.MessageType,
+            "inventory.reserve_stock"
+        );
+        services.AddIntegrationConsumer<ReleaseStock>(
+            ReleaseStock.MessageType,
+            "inventory.release_stock"
+        );
+        services.AddIntegrationConsumer<CommitStock>(
+            CommitStock.MessageType,
+            "inventory.commit_stock"
+        );
+
+        return services;
+    }
+
+    public static Task WaitForInventoryDatabaseAsync(
+        this IServiceProvider services,
+        CancellationToken cancellationToken = default
+    ) => services.WaitForMigrationsAsync<InventoryDbContext>(cancellationToken);
 
     public static Task MigrateInventoryDatabaseAsync(
         this IServiceProvider services,

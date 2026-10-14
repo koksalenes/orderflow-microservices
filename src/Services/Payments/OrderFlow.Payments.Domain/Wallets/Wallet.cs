@@ -9,6 +9,7 @@ public sealed class Wallet : EventSourcedAggregate
     public const decimal MaxBalance = 100_000m;
 
     private readonly Dictionary<Guid, decimal> _pendingDeposits = [];
+    private readonly Dictionary<Guid, decimal> _orderPayments = [];
 
     private Wallet() { }
 
@@ -45,6 +46,11 @@ public sealed class Wallet : EventSourcedAggregate
             foreach (var (depositId, amount) in snapshot.PendingDeposits)
             {
                 wallet._pendingDeposits[depositId] = amount;
+            }
+
+            foreach (var (orderId, amount) in snapshot.OrderPayments)
+            {
+                wallet._orderPayments[orderId] = amount;
             }
 
             wallet.RestoreVersion(snapshotVersion);
@@ -92,6 +98,38 @@ public sealed class Wallet : EventSourcedAggregate
         return Result.Success();
     }
 
+    public Result Withdraw(Guid orderId, decimal amount, DateTimeOffset now)
+    {
+        if (amount <= 0)
+        {
+            return Result.Failure(WalletErrors.InvalidAmount(amount));
+        }
+
+        if (_orderPayments.ContainsKey(orderId))
+        {
+            return Result.Failure(WalletErrors.OrderAlreadyPaid(orderId));
+        }
+
+        if (Balance < amount)
+        {
+            return Result.Failure(WalletErrors.InsufficientFunds(Balance, amount));
+        }
+
+        Apply(new FundsWithdrawn(orderId, amount, Currency, now));
+        return Result.Success();
+    }
+
+    public Result Refund(Guid orderId, Guid refundId, DateTimeOffset now)
+    {
+        if (!_orderPayments.TryGetValue(orderId, out var amount))
+        {
+            return Result.Failure(WalletErrors.OrderPaymentNotFound(orderId));
+        }
+
+        Apply(new FundsRefunded(orderId, refundId, amount, Currency, now));
+        return Result.Success();
+    }
+
     public Result SettleDeposit(Guid depositId, DateTimeOffset now)
     {
         if (!_pendingDeposits.ContainsKey(depositId))
@@ -120,7 +158,13 @@ public sealed class Wallet : EventSourcedAggregate
     }
 
     public WalletSnapshot ToSnapshot() =>
-        new(OwnerId, Currency, Balance, new Dictionary<Guid, decimal>(_pendingDeposits));
+        new(
+            OwnerId,
+            Currency,
+            Balance,
+            new Dictionary<Guid, decimal>(_pendingDeposits),
+            new Dictionary<Guid, decimal>(_orderPayments)
+        );
 
     protected override void When(IDomainEvent domainEvent)
     {
@@ -135,6 +179,14 @@ public sealed class Wallet : EventSourcedAggregate
             case FundsDeposited deposited:
                 Balance += deposited.Amount;
                 _pendingDeposits[deposited.DepositId] = deposited.Amount;
+                break;
+            case FundsWithdrawn withdrawn:
+                Balance -= withdrawn.Amount;
+                _orderPayments[withdrawn.OrderId] = withdrawn.Amount;
+                break;
+            case FundsRefunded refunded:
+                Balance += refunded.Amount;
+                _orderPayments.Remove(refunded.OrderId);
                 break;
             case DepositSettled settled:
                 _pendingDeposits.Remove(settled.DepositId);

@@ -205,6 +205,9 @@ services:
     environment:
       <<: *app-environment
       Database__ConnectionString: Host=postgres;Database=products_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      Kestrel__Endpoints__Http__Url: http://+:8080
+      Kestrel__Endpoints__Grpc__Url: http://+:8081
+      Kestrel__Endpoints__Grpc__Protocols: Http2
 
   products-worker:
     <<: *app
@@ -241,6 +244,14 @@ services:
     environment:
       <<: *app-environment
       Database__ConnectionString: Host=postgres;Database=inventory_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Username: ${RABBITMQ_DEFAULT_USER}
+      RabbitMq__Password: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   orders-api:
     <<: *app
@@ -253,6 +264,10 @@ services:
     environment:
       <<: *app-environment
       Database__ConnectionString: Host=postgres;Database=orders_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      Authentication__Authority: http://localhost:${KEYCLOAK_PORT:-8080}/realms/orderflow
+      Authentication__MetadataAddress: http://keycloak:8080/realms/orderflow/.well-known/openid-configuration
+      Authentication__RequireHttpsMetadata: "false"
+      Services__ProductsGrpc: http://products-api:8081
 
   orders-worker:
     <<: *app
@@ -265,6 +280,14 @@ services:
     environment:
       <<: *app-environment
       Database__ConnectionString: Host=postgres;Database=orders_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Username: ${RABBITMQ_DEFAULT_USER}
+      RabbitMq__Password: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   payments-api:
     <<: *app

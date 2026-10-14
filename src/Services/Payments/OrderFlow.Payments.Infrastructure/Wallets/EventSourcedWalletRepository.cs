@@ -217,6 +217,8 @@ internal sealed class EventSourcedWalletRepository(
         {
             FundsDeposited deposited => deposited.DepositId,
             DepositReversed reversed => reversed.ReversalId,
+            FundsWithdrawn withdrawn => withdrawn.OrderId,
+            FundsRefunded refunded => refunded.RefundId,
             _ => Guid.CreateVersion7(timeProvider.GetUtcNow()),
         };
 

@@ -26,6 +26,27 @@ public static class WalletErrors
             $"The wallet '{streamId}' was changed by another request. Try again."
         );
 
+    public static Error InsufficientFunds(decimal balance, decimal amount) =>
+        new(
+            "payments.insufficient_funds",
+            $"The balance {balance} is lower than {amount}.",
+            ErrorType.Conflict,
+            new Dictionary<string, object?>(StringComparer.Ordinal)
+            {
+                ["balance"] = balance,
+                ["amount"] = amount,
+            }
+        );
+
+    public static Error OrderAlreadyPaid(Guid orderId) =>
+        Error.Conflict("payments.order_already_paid", $"Order '{orderId}' is already paid.");
+
+    public static Error OrderPaymentNotFound(Guid orderId) =>
+        Error.NotFound(
+            "payments.order_payment_not_found",
+            $"No wallet payment exists for order '{orderId}'."
+        );
+
     public static Error DepositNotPending(Guid depositId) =>
         Error.Conflict(
             "payments.deposit_not_pending",

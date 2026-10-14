@@ -4,6 +4,7 @@ using OrderFlow.BuildingBlocks.Application.Paging;
 using OrderFlow.BuildingBlocks.Infrastructure.Messaging;
 using OrderFlow.BuildingBlocks.Infrastructure.Persistence;
 using OrderFlow.Payments.Application;
+using OrderFlow.Payments.Application.CardPayments;
 using OrderFlow.Payments.Application.Cards;
 using OrderFlow.Payments.Application.Deposits;
 using OrderFlow.Payments.Application.Deposits.GetDepositSagas;
@@ -11,8 +12,10 @@ using OrderFlow.Payments.Application.Wallets;
 using OrderFlow.Payments.Application.Wallets.GetWallet;
 using OrderFlow.Payments.Application.Wallets.GetWalletEventStream;
 using OrderFlow.Payments.Application.Wallets.GetWalletTransactions;
+using OrderFlow.Payments.Contracts.Orders;
 using OrderFlow.Payments.Contracts.Settlement;
 using OrderFlow.Payments.Contracts.Wallets;
+using OrderFlow.Payments.Infrastructure.CardPayments;
 using OrderFlow.Payments.Infrastructure.Cards;
 using OrderFlow.Payments.Infrastructure.Deposits;
 using OrderFlow.Payments.Infrastructure.Deposits.GetDepositSagas;
@@ -37,8 +40,14 @@ public static class PaymentsInfrastructureExtensions
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        services.AddOutbox();
+        services
+            .AddOptions<CardNetworkOptions>()
+            .BindConfiguration(CardNetworkOptions.SectionName)
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+        services.AddUnitOfWork<PaymentsDbContext>();
         services.AddScoped<IWalletRepository, EventSourcedWalletRepository>();
+        services.AddScoped<ICardPaymentRepository, EfCardPaymentRepository>();
         services.AddScoped<IDepositSagaRepository, EfDepositSagaRepository>();
         services.AddSingleton<IPaymentGateway, TestPaymentGateway>();
 
@@ -65,11 +74,6 @@ public static class PaymentsInfrastructureExtensions
     public static IServiceCollection AddPaymentsMessaging(this IServiceCollection services)
     {
         services.AddOutboxPublisher();
-        services
-            .AddOptions<CardNetworkOptions>()
-            .BindConfiguration(CardNetworkOptions.SectionName)
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
         services.AddScoped<IIntegrationMessageHandler<SettleCardPayment>, TestCardNetwork>();
 
         services.AddIntegrationConsumer<WalletFundsDeposited>(
@@ -87,6 +91,18 @@ public static class PaymentsInfrastructureExtensions
         services.AddIntegrationConsumer<CardPaymentSettlementFailed>(
             CardPaymentSettlementFailed.MessageType,
             "payments.deposit_saga.card_payment_settlement_failed"
+        );
+        services.AddIntegrationConsumer<ChargeOrder>(
+            ChargeOrder.MessageType,
+            "payments.charge_order"
+        );
+        services.AddIntegrationConsumer<RefundOrderPayment>(
+            RefundOrderPayment.MessageType,
+            "payments.refund_order_payment"
+        );
+        services.AddIntegrationConsumer<VoidCardPayment>(
+            VoidCardPayment.MessageType,
+            "payments.void_card_payment"
         );
 
         return services;

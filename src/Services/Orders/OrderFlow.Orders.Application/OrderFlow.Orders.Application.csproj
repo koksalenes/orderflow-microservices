@@ -1,7 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../OrderFlow.Orders.Domain/OrderFlow.Orders.Domain.csproj" />
     <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.Application/OrderFlow.BuildingBlocks.Application.csproj" />
     <ProjectReference Include="../OrderFlow.Orders.Contracts/OrderFlow.Orders.Contracts.csproj" />
+    <ProjectReference Include="../../Inventory/OrderFlow.Inventory.Contracts/OrderFlow.Inventory.Contracts.csproj" />
+    <ProjectReference Include="../../Payments/OrderFlow.Payments.Contracts/OrderFlow.Payments.Contracts.csproj" />
+    <ProjectReference Include="../../Products/OrderFlow.Products.Contracts/OrderFlow.Products.Contracts.csproj" />
   </ItemGroup>
 </Project>

@@ -42,6 +42,13 @@ internal static class WalletProjector
         LEFT JOIN wallet_transactions deposit ON deposit.id = @DepositId;
         """;
 
+    private const string OrderMovementSql = """
+        INSERT INTO wallet_transactions
+            (id, owner_id, type, amount, balance_after, currency, reference_id, occurred_at)
+        VALUES
+            (@Id, @OwnerId, @Type, @Amount, @BalanceAfter, @Currency, @OrderId, @OccurredAt);
+        """;
+
     private const string VersionSql = """
         UPDATE wallet_balances SET version = @Version, updated_at = @OccurredAt WHERE owner_id = @OwnerId;
         """;
@@ -156,6 +163,49 @@ internal static class WalletProjector
                             reversed.Currency,
                             reversed.ReasonCode,
                             reversed.OccurredAt,
+                        }
+                    )
+                    .ConfigureAwait(false);
+                break;
+
+            case FundsWithdrawn withdrawn:
+                var balanceAfterPayment = await ChangeBalance(
+                        -withdrawn.Amount,
+                        withdrawn.OccurredAt
+                    )
+                    .ConfigureAwait(false);
+                await Execute(
+                        OrderMovementSql,
+                        new
+                        {
+                            Id = withdrawn.OrderId,
+                            OwnerId = ownerId,
+                            Type = "payment",
+                            Amount = -withdrawn.Amount,
+                            BalanceAfter = balanceAfterPayment,
+                            withdrawn.Currency,
+                            withdrawn.OrderId,
+                            withdrawn.OccurredAt,
+                        }
+                    )
+                    .ConfigureAwait(false);
+                break;
+
+            case FundsRefunded refunded:
+                var balanceAfterRefund = await ChangeBalance(refunded.Amount, refunded.OccurredAt)
+                    .ConfigureAwait(false);
+                await Execute(
+                        OrderMovementSql,
+                        new
+                        {
+                            Id = refunded.RefundId,
+                            OwnerId = ownerId,
+                            Type = "refund",
+                            refunded.Amount,
+                            BalanceAfter = balanceAfterRefund,
+                            refunded.Currency,
+                            refunded.OrderId,
+                            refunded.OccurredAt,
                         }
                     )
                     .ConfigureAwait(false);

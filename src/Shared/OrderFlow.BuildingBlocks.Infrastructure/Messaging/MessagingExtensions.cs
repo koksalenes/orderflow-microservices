@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using OrderFlow.BuildingBlocks.Application.Messaging;
 
 namespace OrderFlow.BuildingBlocks.Infrastructure.Messaging;
@@ -7,8 +8,8 @@ public static class MessagingExtensions
 {
     public static IServiceCollection AddOutbox(this IServiceCollection services)
     {
-        services.AddScoped<Outbox>();
-        services.AddScoped<IOutbox>(provider => provider.GetRequiredService<Outbox>());
+        services.TryAddScoped<Outbox>();
+        services.TryAddScoped<IOutbox>(provider => provider.GetRequiredService<Outbox>());
 
         return services;
     }

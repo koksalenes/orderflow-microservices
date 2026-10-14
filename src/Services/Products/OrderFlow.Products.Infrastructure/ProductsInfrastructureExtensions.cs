@@ -5,10 +5,12 @@ using OrderFlow.BuildingBlocks.Infrastructure.Persistence;
 using OrderFlow.Products.Application;
 using OrderFlow.Products.Application.Products.GetProductById;
 using OrderFlow.Products.Application.Products.GetProducts;
+using OrderFlow.Products.Application.Products.GetProductsByIds;
 using OrderFlow.Products.Infrastructure.Persistence;
 using OrderFlow.Products.Infrastructure.Persistence.Seed;
 using OrderFlow.Products.Infrastructure.Products.GetProductById;
 using OrderFlow.Products.Infrastructure.Products.GetProducts;
+using OrderFlow.Products.Infrastructure.Products.GetProductsByIds;
 
 namespace OrderFlow.Products.Infrastructure;
 
@@ -35,6 +37,11 @@ public static class ProductsInfrastructureExtensions
             GetProductsQueryHandler
         >();
         services.AddQueryHandler<GetProductByIdQuery, ProductDto, GetProductByIdQueryHandler>();
+        services.AddQueryHandler<
+            GetProductsByIdsQuery,
+            IReadOnlyList<CatalogProductDto>,
+            GetProductsByIdsQueryHandler
+        >();
 
         return services;
     }

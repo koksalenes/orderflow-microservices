@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <meta name="supported-color-schemes" content="light">
+    <title>{{subject}}</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: #eff6ff; }
+        a { color: #2563eb; }
+        @media only screen and (max-width: 620px) {
+            .container { width: 100% !important; }
+            .content { padding: 28px 20px !important; }
+            .thumb { display: none !important; }
+        }
+    </style>
+</head>
+<body style="margin:0;padding:0;background-color:#eff6ff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;color:#0f172a;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">{{preheader}}</div>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#eff6ff;">
+        <tr>
+            <td align="center" style="padding:40px 16px;">
+                <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;">
+                    <tr>
+                        <td align="center" style="padding-bottom:24px;">
+                            <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                                <tr>
+                                    <td style="background-color:#2563eb;border-radius:8px;width:32px;height:32px;text-align:center;vertical-align:middle;color:#ffffff;font-size:16px;font-weight:700;">O</td>
+                                    <td style="padding-left:10px;font-size:18px;font-weight:700;color:#0f172a;">OrderFlow</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color:#ffffff;border:1px solid #dbeafe;border-radius:14px;overflow:hidden;">
+                            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                <tr><td style="height:4px;background-color:{{accent}};font-size:0;line-height:0;">&nbsp;</td></tr>
+                                <tr>
+                                    <td class="content" style="padding:36px 40px;font-size:15px;line-height:24px;color:#334155;">
+                                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 20px 0;">
+                                            <tr>
+                                                <td style="width:44px;height:44px;border-radius:22px;background-color:{{iconBackground}};text-align:center;vertical-align:middle;color:{{accent}};font-size:20px;font-weight:700;">{{icon}}</td>
+                                                <td style="padding-left:14px;">
+                                                    <p style="margin:0;font-size:12px;line-height:16px;color:#64748b;text-transform:uppercase;letter-spacing:0.05em;">{{orderLabel}} {{orderNumber}}</p>
+                                                    <p style="margin:2px 0 0 0;font-size:13px;line-height:18px;color:#64748b;">{{placedAt}}</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <h1 style="margin:0 0 16px 0;font-size:22px;line-height:30px;font-weight:700;color:#0f172a;">{{heading}}</h1>
+                                        <p style="margin:0 0 12px 0;">{{greeting}}</p>
+                                        <p style="margin:0 0 24px 0;">{{intro}}</p>
+
+                                        [[progress]]
+
+                                        [[highlight]]
+
+                                        <p style="margin:0 0 8px 0;font-size:13px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-spacing:0.04em;">{{itemsLabel}}</p>
+                                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 16px 0;font-size:14px;line-height:20px;">
+                                            [[itemRows]]
+                                        </table>
+
+                                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 24px 0;font-size:14px;line-height:20px;">
+                                            [[totalRows]]
+                                        </table>
+
+                                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px 0;font-size:13px;line-height:20px;">
+                                            <tr>
+                                                <td valign="top" width="50%" style="padding-right:12px;">
+                                                    <p style="margin:0 0 4px 0;font-weight:700;color:#0f172a;">{{addressLabel}}</p>
+                                                    <p style="margin:0;color:#475569;">[[address]]</p>
+                                                </td>
+                                                <td valign="top" width="50%" style="padding-left:12px;">
+                                                    <p style="margin:0 0 4px 0;font-weight:700;color:#0f172a;">{{paymentLabel}}</p>
+                                                    <p style="margin:0;color:#475569;">{{payment}}</p>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px 0;">
+                                            <tr>
+                                                <td style="border-radius:8px;background-color:#2563eb;">
+                                                    <a href="{{orderUrl}}" target="_blank" style="display:inline-block;padding:12px 24px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;border-radius:8px;">{{button}}</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                                            <tr>
+                                                <td style="padding:12px 14px;background-color:#fffbeb;border:1px solid #fde68a;border-radius:10px;font-size:13px;line-height:19px;color:#92400e;">&#9888;&nbsp; {{testNotice}}</td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" style="padding:24px 16px 0 16px;font-size:12px;line-height:18px;color:#64748b;">
+                            {{footer}}<br>
+                            &copy; {{year}} OrderFlow
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -4,10 +4,12 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": false,
-      "applicationUrl": "http://localhost:5101",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "Database__MigrateOnStartup": "true"
+        "Database__MigrateOnStartup": "true",
+        "Kestrel__Endpoints__Http__Url": "http://localhost:5101",
+        "Kestrel__Endpoints__Grpc__Url": "http://localhost:5121",
+        "Kestrel__Endpoints__Grpc__Protocols": "Http2"
       }
     }
   }

@@ -13,6 +13,8 @@ internal static class EventTypeRegistry
         ["wallet.opened.v1"] = typeof(WalletOpened),
         ["wallet.funds_deposited.v1"] = typeof(FundsDeposited),
         ["wallet.deposit_settled.v1"] = typeof(DepositSettled),
+        ["wallet.funds_withdrawn.v1"] = typeof(FundsWithdrawn),
+        ["wallet.funds_refunded.v1"] = typeof(FundsRefunded),
         ["wallet.deposit_reversed.v1"] = typeof(DepositReversed),
     };
 

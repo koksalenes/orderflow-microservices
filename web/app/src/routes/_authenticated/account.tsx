@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { signOut } from "@/features/auth/session";
+import { OrderStatusBadge } from "@/features/orders/components/order-status-badge";
+import { myOrdersQueryOptions } from "@/features/orders/orders-api";
 import { walletQueryOptions } from "@/features/wallet/wallet-api";
 import { formatPrice } from "@/lib/format";
 import { useTranslation } from "@/i18n/use-translation";
@@ -102,14 +104,7 @@ function AccountPage() {
                             <CardDescription>{t("account.sessionText")}</CardDescription>
                         </CardHeader>
                     </Card>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="flex items-center gap-2">
-                                <PackageOpen className="size-4 text-primary" /> {t("account.orders")}
-                            </CardTitle>
-                            <CardDescription>{t("account.ordersEmpty")}</CardDescription>
-                        </CardHeader>
-                    </Card>
+                    <RecentOrders />
                 </div>
             </div>
         </div>
@@ -122,5 +117,43 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
             <dt className="text-muted-foreground">{label}</dt>
             <dd className="font-medium">{children}</dd>
         </div>
+    );
+}
+
+function RecentOrders() {
+    const { t, locale } = useTranslation();
+    const orders = useQuery(myOrdersQueryOptions(1, 3));
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                    <PackageOpen className="size-4 text-primary" /> {t("account.orders")}
+                </CardTitle>
+                {orders.data?.items.length === 0 && <CardDescription>{t("account.ordersEmpty")}</CardDescription>}
+            </CardHeader>
+            {orders.data !== undefined && orders.data.items.length > 0 && (
+                <CardContent className="flex flex-col gap-2">
+                    {orders.data.items.map(order => (
+                        <Link
+                            key={order.id}
+                            to="/orders/$orderId"
+                            params={{ orderId: order.id }}
+                            search={{}}
+                            className="flex items-center gap-3 rounded-lg px-2 py-2 hover:bg-muted"
+                        >
+                            <span className="font-mono text-xs font-semibold">{order.number}</span>
+                            <OrderStatusBadge status={order.status} />
+                            <span className="ml-auto text-sm font-medium">{formatPrice(order.total, order.currency, locale)}</span>
+                        </Link>
+                    ))}
+                    <Button asChild variant="outline" size="sm" className="mt-1 w-fit">
+                        <Link to="/orders" search={{ page: 1 }}>
+                            {t("orders.viewAll")} <ArrowRight />
+                        </Link>
+                    </Button>
+                </CardContent>
+            )}
+        </Card>
     );
 }

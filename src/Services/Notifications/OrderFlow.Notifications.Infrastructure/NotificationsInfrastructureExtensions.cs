@@ -6,6 +6,7 @@ using OrderFlow.Notifications.Application;
 using OrderFlow.Notifications.Application.Emails;
 using OrderFlow.Notifications.Infrastructure.Email;
 using OrderFlow.Notifications.Infrastructure.Persistence;
+using OrderFlow.Orders.Contracts.Orders;
 using OrderFlow.Payments.Contracts.Wallets;
 
 namespace OrderFlow.Notifications.Infrastructure;
@@ -50,6 +51,10 @@ public static class NotificationsInfrastructureExtensions
         services.AddIntegrationConsumer<WalletDepositReversed>(
             WalletDepositReversed.MessageType,
             WalletDepositReversedQueue
+        );
+        services.AddIntegrationConsumer<OrderStatusChanged>(
+            OrderStatusChanged.MessageType,
+            "notifications.order_status_changed"
         );
 
         return services;

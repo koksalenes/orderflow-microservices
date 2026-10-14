@@ -2,6 +2,7 @@ using System.Data.Common;
 using System.Diagnostics;
 using System.Text.Json;
 using Dapper;
+using Npgsql;
 using OrderFlow.BuildingBlocks.Application.Messaging;
 using OrderFlow.BuildingBlocks.ServiceDefaults.Correlation;
 
@@ -64,4 +65,29 @@ public sealed class Outbox(TimeProvider timeProvider) : IOutbox
     }
 
     public void Clear() => _pending.Clear();
+
+    public async Task FlushAsync(NpgsqlDataSource dataSource, CancellationToken cancellationToken)
+    {
+        ArgumentNullException.ThrowIfNull(dataSource);
+
+        if (_pending.Count == 0)
+        {
+            return;
+        }
+
+        var connection = await dataSource
+            .OpenConnectionAsync(cancellationToken)
+            .ConfigureAwait(false);
+        await using (connection.ConfigureAwait(false))
+        {
+            var transaction = await connection
+                .BeginTransactionAsync(cancellationToken)
+                .ConfigureAwait(false);
+            await using (transaction.ConfigureAwait(false))
+            {
+                await WriteAsync(connection, transaction, cancellationToken).ConfigureAwait(false);
+                await transaction.CommitAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+    }
 }

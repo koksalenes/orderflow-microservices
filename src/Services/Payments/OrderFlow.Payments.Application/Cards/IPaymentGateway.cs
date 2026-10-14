@@ -9,7 +9,20 @@ public interface IPaymentGateway
         CancellationToken cancellationToken
     );
 
+    Task<Result> CaptureAsync(
+        string authorizationCode,
+        decimal amount,
+        string cardLast4,
+        CancellationToken cancellationToken
+    );
+
     Task<Result> VoidAsync(string authorizationCode, CancellationToken cancellationToken);
+
+    Task<Result> RefundAsync(
+        string authorizationCode,
+        decimal amount,
+        CancellationToken cancellationToken
+    );
 }
 
 public sealed record CardCharge(

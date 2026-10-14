@@ -6,7 +6,7 @@ export type Wallet = { balance: number; currency: string; version: number; updat
 
 export type WalletTransaction = {
     id: string;
-    type: "deposit" | "reversal";
+    type: "deposit" | "reversal" | "payment" | "refund";
     amount: number;
     balanceAfter: number;
     currency: string;

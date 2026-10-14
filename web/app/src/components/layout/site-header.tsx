@@ -66,13 +66,15 @@ export function SiteHeader() {
 
                 <div className="ml-auto flex items-center gap-2 lg:ml-0">
                     <LanguageSwitcher />
-                    <Button variant="ghost" size="icon-lg" className="relative" aria-label={t("nav.cart")}>
-                        <ShoppingBag />
-                        {cartCount > 0 && (
-                            <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
-                                {cartCount}
-                            </span>
-                        )}
+                    <Button asChild variant="ghost" size="icon-lg" className="relative" aria-label={t("nav.cart")}>
+                        <Link to="/cart">
+                            <ShoppingBag />
+                            {cartCount > 0 && (
+                                <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
                     </Button>
                     <UserMenu />
                 </div>

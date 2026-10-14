@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using OrderFlow.BuildingBlocks.Web.Correlation;
 using OrderFlow.BuildingBlocks.Web.Errors;
@@ -38,10 +39,14 @@ public static class HttpDefaultsExtensions
         app.UseMiddleware<CorrelationIdMiddleware>(correlationIdPolicy);
         app.UseForwardedHeaders();
         app.UseMiddleware<SecurityHeadersMiddleware>();
-        app.UseHttpLogging();
+        app.UseWhen(context => !IsGrpc(context.Request), branch => branch.UseHttpLogging());
         app.UseExceptionHandler();
         app.UseStatusCodePages();
 
         return app;
     }
+
+    private static bool IsGrpc(HttpRequest request) =>
+        request.ContentType?.StartsWith("application/grpc", StringComparison.OrdinalIgnoreCase)
+        == true;
 }

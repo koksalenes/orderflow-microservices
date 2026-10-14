@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option csharp_namespace = "OrderFlow.Products.Contracts.Grpc";
+
+package orderflow.products.v1;
+
+service ProductCatalog {
+  rpc GetProducts (GetProductsRequest) returns (GetProductsResponse);
+}
+
+message GetProductsRequest {
+  repeated string product_ids = 1;
+}
+
+message GetProductsResponse {
+  repeated CatalogProduct products = 1;
+}
+
+message CatalogProduct {
+  string id = 1;
+  string name = 2;
+  string price = 3;
+  string currency = 4;
+  string image_url = 5;
+}

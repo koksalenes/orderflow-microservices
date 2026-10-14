@@ -15,6 +15,21 @@ public sealed record FundsDeposited(
     DateTimeOffset OccurredAt
 ) : IDomainEvent;
 
+public sealed record FundsWithdrawn(
+    Guid OrderId,
+    decimal Amount,
+    string Currency,
+    DateTimeOffset OccurredAt
+) : IDomainEvent;
+
+public sealed record FundsRefunded(
+    Guid OrderId,
+    Guid RefundId,
+    decimal Amount,
+    string Currency,
+    DateTimeOffset OccurredAt
+) : IDomainEvent;
+
 public sealed record DepositSettled(Guid DepositId, DateTimeOffset OccurredAt) : IDomainEvent;
 
 public sealed record DepositReversed(
