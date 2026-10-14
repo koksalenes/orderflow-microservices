@@ -17,13 +17,23 @@ public static class CardBrands
             return Visa;
         }
 
-        return number.StartsWith("34", StringComparison.Ordinal)
+        if (
+            number.StartsWith("34", StringComparison.Ordinal)
             || number.StartsWith("37", StringComparison.Ordinal)
-            ? Amex
-            : number.StartsWith("9792", StringComparison.Ordinal)
+        )
+        {
+            return Amex;
+        }
+
+        if (
+            number.StartsWith("9792", StringComparison.Ordinal)
             || number.StartsWith("65", StringComparison.Ordinal)
-            ? Troy
-            : number.Length >= 2 && number[0] is '5' or '2' ? Mastercard : Unknown;
+        )
+        {
+            return Troy;
+        }
+
+        return number.Length >= 2 && number[0] is '5' or '2' ? Mastercard : Unknown;
     }
 
     public static int CvvLength(string number) => Detect(number) == Amex ? 4 : 3;

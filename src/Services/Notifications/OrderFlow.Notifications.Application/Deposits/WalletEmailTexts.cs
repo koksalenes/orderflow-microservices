@@ -114,5 +114,13 @@ internal sealed record WalletEmailTexts(
             _ => DepositEn,
         };
 
-    public static string Reason(string code, string locale) => !Reasons.TryGetValue(code, out var text) ? code : locale == "tr" ? text.Tr : text.En;
+    public static string Reason(string code, string locale)
+    {
+        if (!Reasons.TryGetValue(code, out var text))
+        {
+            return code;
+        }
+
+        return locale == "tr" ? text.Tr : text.En;
+    }
 }

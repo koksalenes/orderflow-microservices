@@ -77,9 +77,9 @@ internal static class BffEndpoints
                 ErrorCodes.InvalidLogoutRequest
             )
             : TypedResults.SignOut(
-            new AuthenticationProperties { RedirectUri = "/" },
-            [BffAuthenticationDefaults.CookieScheme, BffAuthenticationDefaults.OidcScheme]
-        );
+                new AuthenticationProperties { RedirectUri = "/" },
+                [BffAuthenticationDefaults.CookieScheme, BffAuthenticationDefaults.OidcScheme]
+            );
     }
 
     private static async Task<IResult> GetUser(HttpContext context)

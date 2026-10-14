@@ -1,8 +1,9 @@
 # syntax=docker/dockerfile:1
 
 # Keycloak with the OrderFlow login theme (web/keycloak-theme, built with Keycloakify).
+# The theme jar is platform-independent, so it is built once on the build machine.
 
-FROM node:24.15.0-bookworm-slim AS theme
+FROM --platform=$BUILDPLATFORM node:24.15.0-bookworm-slim AS theme
 RUN apt-get update \
     && apt-get install -y --no-install-recommends maven openjdk-17-jdk-headless \
     && rm -rf /var/lib/apt/lists/*

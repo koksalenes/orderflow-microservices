@@ -113,9 +113,12 @@ internal static class OrderEmailCopy
 
     public static string Reason(string? code, string locale)
     {
-        return code is null || !Reasons.TryGetValue(code, out var reason)
-            ? locale == "tr" ? "beklenmeyen bir hata oluştu" : "an unexpected error occurred"
-            : locale == "tr" ? reason.Tr : reason.En;
+        if (code is null || !Reasons.TryGetValue(code, out var reason))
+        {
+            return locale == "tr" ? "beklenmeyen bir hata oluştu" : "an unexpected error occurred";
+        }
+
+        return locale == "tr" ? reason.Tr : reason.En;
     }
 
     public static string Label(string key, string locale) =>

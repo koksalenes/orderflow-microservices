@@ -62,9 +62,12 @@ public sealed class Wallet : EventSourcedAggregate
 
     public Result CanDeposit(decimal amount)
     {
-        return amount <= 0
-            ? Result.Failure(WalletErrors.InvalidAmount(amount))
-            : Balance + amount > MaxBalance
+        if (amount <= 0)
+        {
+            return Result.Failure(WalletErrors.InvalidAmount(amount));
+        }
+
+        return Balance + amount > MaxBalance
             ? Result.Failure(WalletErrors.BalanceLimitExceeded(MaxBalance))
             : Result.Success();
     }

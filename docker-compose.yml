@@ -1,6 +1,7 @@
 name: orderflow
 
 # `make infra-up` starts the infrastructure only; `make up` also builds and starts the services behind the YARP gateway.
+# `make start` runs the same stack from the prebuilt images on GHCR (ORDERFLOW_IMAGE_PREFIX / ORDERFLOW_IMAGE_TAG), without building.
 
 x-app: &app
   profiles: [apps]
@@ -78,7 +79,7 @@ services:
     restart: unless-stopped
 
   keycloak:
-    image: orderflow/keycloak:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/keycloak:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/keycloak/Dockerfile
@@ -142,7 +143,7 @@ services:
 
   gateway:
     profiles: [apps]
-    image: orderflow/gateway:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/gateway:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -167,7 +168,7 @@ services:
 
   bff:
     profiles: [apps]
-    image: orderflow/bff:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/bff:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/bff/Dockerfile
@@ -196,7 +197,7 @@ services:
 
   products-api:
     <<: *app
-    image: orderflow/products-api:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/products-api:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -211,7 +212,7 @@ services:
 
   products-worker:
     <<: *app
-    image: orderflow/products-worker:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/products-worker:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -223,7 +224,7 @@ services:
 
   inventory-api:
     <<: *app
-    image: orderflow/inventory-api:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/inventory-api:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -235,7 +236,7 @@ services:
 
   inventory-worker:
     <<: *app
-    image: orderflow/inventory-worker:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/inventory-worker:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -255,7 +256,7 @@ services:
 
   orders-api:
     <<: *app
-    image: orderflow/orders-api:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/orders-api:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -271,7 +272,7 @@ services:
 
   orders-worker:
     <<: *app
-    image: orderflow/orders-worker:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/orders-worker:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -291,7 +292,7 @@ services:
 
   payments-api:
     <<: *app
-    image: orderflow/payments-api:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/payments-api:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -307,7 +308,7 @@ services:
 
   payments-worker:
     <<: *app
-    image: orderflow/payments-worker:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/payments-worker:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -327,7 +328,7 @@ services:
 
   notifications-api:
     <<: *app
-    image: orderflow/notifications-api:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/notifications-api:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile
@@ -339,7 +340,7 @@ services:
 
   notifications-worker:
     <<: *app
-    image: orderflow/notifications-worker:local
+    image: ${ORDERFLOW_IMAGE_PREFIX:-orderflow}/notifications-worker:${ORDERFLOW_IMAGE_TAG:-local}
     build:
       context: .
       dockerfile: deploy/docker/Dockerfile

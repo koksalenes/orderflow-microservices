@@ -4,23 +4,13 @@ COMPOSE_ALL := docker compose --profile infra --profile apps
 
 .DEFAULT_GOAL := help
 
-.PHONY: web-dev web-build theme-dev theme-build keycloak-realm-reset help env infra-up infra-down infra-reset infra-ps infra-logs up down ps logs images build test format
+.PHONY: start stop web-dev web-build theme-dev theme-build keycloak-realm-reset help env infra-up infra-down infra-reset infra-ps infra-logs up down ps logs images build test format
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-12s %s\n", $$1, $$2}'
 
-env: ## Create .env and add keys missing from .env.example (random values for *_SECRET); existing values are kept
-	@touch .env
-	@[ ! -s .env ] || [ -z "$$(tail -c1 .env)" ] || echo >> .env
-	@while IFS= read -r line || [ -n "$$line" ]; do \
-		case "$$line" in ''|\#*) continue ;; esac; \
-		key=$${line%%=*}; \
-		if ! grep -q "^$$key=" .env; then \
-			case "$$key" in *_SECRET) value=$$(openssl rand -hex 32) ;; *) value=$${line#*=} ;; esac; \
-			echo "$$key=$$value" >> .env; \
-			echo "Added $$key to .env"; \
-		fi; \
-	done < .env.example
+env: ## Create .env and add keys missing from .env.example (random secrets and passwords); existing values are kept
+	@./scripts/env.sh
 
 infra-up: env ## Start the local infrastructure and wait until it is healthy
 	$(COMPOSE) up -d --build --wait
@@ -36,6 +26,12 @@ infra-ps: ## List infrastructure containers and their health
 
 infra-logs: ## Follow infrastructure logs (e.g. make infra-logs s=keycloak)
 	$(COMPOSE) logs -f $(s)
+
+start: ## Run everything from the published GHCR images without building (TAG=v1.2.0 for a release, default latest)
+	./scripts/start.sh $(TAG)
+
+stop: ## Stop everything started with make start or make up (data is kept)
+	$(COMPOSE_ALL) down
 
 up: env ## Build the service images and start infrastructure + services + gateway
 	$(COMPOSE_ALL) up -d --build --wait

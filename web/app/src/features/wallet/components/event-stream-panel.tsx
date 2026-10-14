@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useTranslation } from "@/i18n/use-translation";
-import { formatDateTime } from "@/lib/format";
+import { formatDateTime, formatPrice } from "@/lib/format";
 import { cn } from "@/lib/utils";
 import { walletEventsQueryOptions, type StoredEvent } from "../wallet-api";
 
@@ -75,8 +75,12 @@ function Stat({ label, value }: { label: string; value: string }) {
     );
 }
 
+const debitEvents = new Set(["wallet.funds_withdrawn.v1", "wallet.deposit_reversed.v1"]);
+
 function EventRow({ event, locale }: { event: StoredEvent; locale: "en" | "tr" }) {
     const amount = typeof event.data.amount === "number" ? event.data.amount : undefined;
+    const currency = typeof event.data.currency === "string" ? event.data.currency : "USD";
+    const debit = debitEvents.has(event.type);
 
     return (
         <li className="flex items-start gap-3 rounded-lg border px-3 py-2">
@@ -88,9 +92,9 @@ function EventRow({ event, locale }: { event: StoredEvent; locale: "en" | "tr" }
                 <p className="text-xs text-muted-foreground">{formatDateTime(event.occurredAt, locale)}</p>
             </div>
             {amount !== undefined && (
-                <span className={cn("text-sm font-semibold", event.type.includes("reversed") ? "text-red-700" : "text-emerald-700")}>
-                    {event.type.includes("reversed") ? "−" : "+"}
-                    {amount}
+                <span className={cn("text-sm font-semibold whitespace-nowrap", debit ? "text-red-700" : "text-emerald-700")}>
+                    {debit ? "−" : "+"}
+                    {formatPrice(amount, currency, locale)}
                 </span>
             )}
         </li>

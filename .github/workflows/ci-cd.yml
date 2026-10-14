@@ -1,0 +1,176 @@
+name: CI/CD
+
+# CI on every push and pull request: format, analyzers + build, web builds, compose validation.
+# CD on main, v* tags, or manual run: multi-arch images to ghcr.io/<owner>/<repo>/<image>; a GitHub Release for tags.
+
+on:
+  push:
+    branches: [main, develop]
+    tags: ["v*.*.*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-cd-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  HUSKY: 0
+  DOTNET_NOLOGO: 1
+  DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+jobs:
+  dotnet:
+    name: .NET build, analyzers, format
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: nuget-${{ runner.os }}-${{ hashFiles('Directory.Packages.props', '**/*.csproj') }}
+          restore-keys: nuget-${{ runner.os }}-
+
+      - name: Restore tools
+        run: dotnet tool restore
+
+      - name: Check formatting (CSharpier)
+        run: dotnet csharpier check .
+
+      - name: Build (analyzers and warnings as errors)
+        run: dotnet build OrderFlow.slnx --configuration Release
+
+      - name: Test
+        run: dotnet test OrderFlow.slnx --configuration Release --no-build
+
+  web:
+    name: Web build (${{ matrix.app }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [web/app, web/keycloak-theme]
+    defaults:
+      run:
+        working-directory: ${{ matrix.app }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: ${{ matrix.app }}/package-lock.json
+
+      - run: npm ci
+      - run: npm run build
+
+  compose:
+    name: Compose and scripts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate docker-compose.yml (build and release modes)
+        run: |
+          cp .env.example .env
+          docker compose --profile infra --profile apps config --quiet
+          ORDERFLOW_IMAGE_PREFIX=ghcr.io/${{ github.repository }} ORDERFLOW_IMAGE_TAG=latest \
+            docker compose --profile infra --profile apps config --quiet
+
+      - name: Check shell scripts
+        run: shellcheck scripts/*.sh
+
+  publish:
+    name: Publish image (${{ matrix.image }})
+    needs: [dotnet, web, compose]
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/v')))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { image: gateway, dockerfile: deploy/docker/Dockerfile, project: src/Gateway/OrderFlow.Gateway }
+          - { image: bff, dockerfile: deploy/bff/Dockerfile, project: "" }
+          - { image: keycloak, dockerfile: deploy/keycloak/Dockerfile, project: "" }
+          - { image: products-api, dockerfile: deploy/docker/Dockerfile, project: src/Services/Products/OrderFlow.Products.Api }
+          - { image: products-worker, dockerfile: deploy/docker/Dockerfile, project: src/Services/Products/OrderFlow.Products.Worker }
+          - { image: inventory-api, dockerfile: deploy/docker/Dockerfile, project: src/Services/Inventory/OrderFlow.Inventory.Api }
+          - { image: inventory-worker, dockerfile: deploy/docker/Dockerfile, project: src/Services/Inventory/OrderFlow.Inventory.Worker }
+          - { image: orders-api, dockerfile: deploy/docker/Dockerfile, project: src/Services/Orders/OrderFlow.Orders.Api }
+          - { image: orders-worker, dockerfile: deploy/docker/Dockerfile, project: src/Services/Orders/OrderFlow.Orders.Worker }
+          - { image: payments-api, dockerfile: deploy/docker/Dockerfile, project: src/Services/Payments/OrderFlow.Payments.Api }
+          - { image: payments-worker, dockerfile: deploy/docker/Dockerfile, project: src/Services/Payments/OrderFlow.Payments.Worker }
+          - { image: notifications-api, dockerfile: deploy/docker/Dockerfile, project: src/Services/Notifications/OrderFlow.Notifications.Api }
+          - { image: notifications-worker, dockerfile: deploy/docker/Dockerfile, project: src/Services/Notifications/OrderFlow.Notifications.Worker }
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}/${{ matrix.image }}
+          tags: |
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha,prefix=sha-
+          labels: |
+            org.opencontainers.image.title=orderflow-${{ matrix.image }}
+            org.opencontainers.image.description=OrderFlow ${{ matrix.image }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          build-args: ${{ matrix.project != '' && format('PROJECT={0}', matrix.project) || '' }}
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ matrix.image }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.image }}
+
+  release:
+    name: GitHub Release
+    needs: publish
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          body: |
+            ## Run this release
+
+            No build needed: Docker with Compose v2 and `openssl` are enough.
+
+            ```bash
+            git clone --branch ${{ github.ref_name }} https://github.com/${{ github.repository }}.git
+            cd ${{ github.event.repository.name }}
+            ./scripts/start.sh ${{ github.ref_name }}
+            ```
+
+            Images: `ghcr.io/${{ github.repository }}/<service>:${{ github.ref_name }}` (linux/amd64, linux/arm64).
+            Storefront: http://localhost:3000 · Emails: http://localhost:8025
