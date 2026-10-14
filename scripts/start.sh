@@ -5,6 +5,21 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
+project="${COMPOSE_PROJECT_NAME:-orderflow}"
+if [ ! -f .env ] && docker volume inspect "${project}_postgres-data" >/dev/null 2>&1; then
+    cat >&2 <<MESSAGE
+A database volume (${project}_postgres-data) already exists on this machine, but there is no .env here.
+A new .env would get new random passwords that do not match that database, and Keycloak and the services would fail to connect.
+
+Choose one:
+  - Keep the existing data: copy the .env that created it (e.g. from your other OrderFlow folder) into this folder, then run this script again.
+  - Start fresh (DELETES all OrderFlow data on this machine):
+      docker compose --profile infra --profile apps down -v
+      ./scripts/start.sh
+MESSAGE
+    exit 1
+fi
+
 ./scripts/env.sh
 
 set -a
