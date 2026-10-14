@@ -1,0 +1,15 @@
+**/bin/
+**/obj/
+**/.vs/
+**/.vscode/
+**/*.user
+**/node_modules/
+.git/
+.husky/
+.claude/
+.config/
+docs/
+.env
+.env.*
+**/appsettings.*.json
+**/secrets.json

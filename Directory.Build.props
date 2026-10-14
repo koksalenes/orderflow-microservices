@@ -1,0 +1,71 @@
+<Project>
+  <PropertyGroup Label="Framework">
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Metadata">
+    <Product>OrderFlow</Product>
+    <Company>OrderFlow</Company>
+    <NeutralLanguage>en</NeutralLanguage>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Analysis">
+    <EnableNETAnalyzers>true</EnableNETAnalyzers>
+    <AnalysisLevel>latest-all</AnalysisLevel>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
+    <WarningLevel>9999</WarningLevel>
+    <WarningsNotAsErrors>$(WarningsNotAsErrors);NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
+  </PropertyGroup>
+
+  <!-- ASP.NET Core has no SynchronizationContext, so ConfigureAwait(false) is noise in host projects. -->
+  <PropertyGroup Label="WebHosts" Condition="'$(UsingMicrosoftNETSdkWeb)' == 'true'">
+    <NoWarn>$(NoWarn);CA2007</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Build">
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- CS1587: the comment standard uses /** */ for single-line comments inside method bodies too. -->
+    <NoWarn>$(NoWarn);CS1591;CS1587</NoWarn>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup Label="BannedSymbols">
+    <AdditionalFiles
+      Include="$(MSBuildThisFileDirectory)BannedSymbols.txt"
+      Link="BannedSymbols.txt"
+      Visible="false"
+    />
+  </ItemGroup>
+
+  <!-- Installs the repo's Husky.Net git hooks on first restore; set HUSKY=0 to skip. -->
+  <Target
+    Name="husky"
+    BeforeTargets="Restore;CollectPackageReferences"
+    Condition="'$(HUSKY)' != '0'"
+  >
+    <Exec
+      Command="dotnet tool restore"
+      StandardOutputImportance="Low"
+      StandardErrorImportance="High"
+      WorkingDirectory="$(MSBuildThisFileDirectory)"
+      ContinueOnError="true"
+      IgnoreExitCode="true"
+    />
+    <Exec
+      Command="dotnet husky install"
+      StandardOutputImportance="Low"
+      StandardErrorImportance="High"
+      WorkingDirectory="$(MSBuildThisFileDirectory)"
+      IgnoreExitCode="true"
+      IgnoreStandardErrorWarningFormat="true"
+    />
+  </Target>
+</Project>

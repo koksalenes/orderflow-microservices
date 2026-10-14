@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="../OrderFlow.Orders.Domain/OrderFlow.Orders.Domain.csproj" />
+    <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.Application/OrderFlow.BuildingBlocks.Application.csproj" />
+    <ProjectReference Include="../OrderFlow.Orders.Contracts/OrderFlow.Orders.Contracts.csproj" />
+  </ItemGroup>
+</Project>

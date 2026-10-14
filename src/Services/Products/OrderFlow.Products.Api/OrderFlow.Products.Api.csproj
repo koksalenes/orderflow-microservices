@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <UserSecretsId>orderflow-products</UserSecretsId>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../OrderFlow.Products.Infrastructure/OrderFlow.Products.Infrastructure.csproj" />
+    <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.ServiceDefaults/OrderFlow.BuildingBlocks.ServiceDefaults.csproj" />
+    <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.Web/OrderFlow.BuildingBlocks.Web.csproj" />
+  </ItemGroup>
+</Project>

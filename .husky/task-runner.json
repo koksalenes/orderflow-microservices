@@ -1,0 +1,32 @@
+{
+   "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+   "tasks": [
+      {
+         "name": "pre-commit",
+         "group": "pre-commit",
+         "command": "bash",
+         "args": [ "-c", "dotnet csharpier format \"$@\" && dotnet format OrderFlow.slnx --include \"$@\" && git add \"$@\"", "--", "${staged}" ],
+         "windows": {
+            "command": "powershell",
+            "args": [ "-NoProfile", "-Command", "& { dotnet csharpier format @args; dotnet format OrderFlow.slnx --include @args; git add @args }", "${staged}" ]
+         },
+         "include": [ "**/*.cs" ]
+      },
+      {
+         "name": "csharpier-check",
+         "group": "pre-push",
+         "command": "dotnet",
+         "args": [ "csharpier", "check", "." ]
+      },
+      {
+         "name": "pre-push",
+         "group": "pre-push",
+         "command": "bash",
+         "args": [ "-c", "dotnet build OrderFlow.slnx --nologo && dotnet test OrderFlow.slnx --nologo" ],
+         "windows": {
+            "command": "cmd",
+            "args": [ "/c", "dotnet build OrderFlow.slnx --nologo && dotnet test OrderFlow.slnx --nologo" ]
+         }
+      }
+   ]
+}

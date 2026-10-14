@@ -1,0 +1,28 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+commit_msg_file="$1"
+commit_msg=$(head -n1 "$commit_msg_file")
+
+# Allow auto-generated messages that never follow Conventional Commits.
+case "$commit_msg" in
+  "Merge "*|"Revert "*|"fixup! "*|"squash! "*)
+    exit 0
+    ;;
+esac
+
+pattern='^(feat|fix|docs|style|refactor|perf|test|chore|build|ci|revert)(\([a-zA-Z0-9_/-]+\))?!?: .{1,100}$'
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+  echo ""
+  echo "ERROR: commit message does not follow Conventional Commits."
+  echo ""
+  echo "  <type>(<scope>): <subject>"
+  echo ""
+  echo "Allowed types: feat, fix, docs, style, refactor, perf, test, chore, build, ci, revert"
+  echo "Example: feat(auth): add refresh token rotation"
+  echo ""
+  echo "Got: $commit_msg"
+  echo ""
+  exit 1
+fi

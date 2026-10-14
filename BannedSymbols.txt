@@ -1,0 +1,5 @@
+P:System.DateTime.Now;Use 'TimeProvider.GetUtcNow()' instead of 'DateTime.Now' to ensure testability and prevent timezone issues.
+P:System.DateTime.UtcNow;Use 'TimeProvider.GetUtcNow()' instead of 'DateTime.UtcNow' to support proper dependency injection and time mocking in unit tests.
+P:System.DateTime.Today;Use 'TimeProvider.GetUtcNow().Date' instead of 'DateTime.Today' for testable and time-zone-aware date tracking.
+P:System.DateTimeOffset.Now;Use 'TimeProvider.GetUtcNow()' instead of 'DateTimeOffset.Now' to avoid hardcoded environment dependency.
+P:System.DateTimeOffset.UtcNow;Use 'TimeProvider.GetUtcNow()' instead of 'DateTimeOffset.UtcNow' to maintain testability across the application.

@@ -1,0 +1,6 @@
+{
+  "files.associations": {
+    "appsettings*.json": "jsonc"
+  },
+  "dotnet.defaultSolution": "OrderFlow.slnx"
+}
