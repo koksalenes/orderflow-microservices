@@ -1,5 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Persistence/Seed/*.json" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../OrderFlow.Products.Application/OrderFlow.Products.Application.csproj" />
     <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.Infrastructure/OrderFlow.BuildingBlocks.Infrastructure.csproj" />
   </ItemGroup>

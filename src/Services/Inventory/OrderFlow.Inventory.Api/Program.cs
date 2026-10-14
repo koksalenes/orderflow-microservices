@@ -2,6 +2,7 @@ using OrderFlow.BuildingBlocks.ServiceDefaults;
 using OrderFlow.BuildingBlocks.ServiceDefaults.HealthChecks;
 using OrderFlow.BuildingBlocks.Web;
 using OrderFlow.BuildingBlocks.Web.Versioning;
+using OrderFlow.Inventory.Api.Stock;
 using OrderFlow.Inventory.Infrastructure;
 
 if (HealthProbe.IsRequested(args))
@@ -19,8 +20,9 @@ var app = builder.Build();
 
 app.UseWebDefaults();
 app.MapDefaultEndpoints();
-app.MapVersionedGroup("inventory");
+app.MapVersionedGroup("inventory").MapStockEndpoints();
 
+await app.Services.MigrateInventoryDatabaseAsync();
 await app.RunAsync();
 
 return 0;

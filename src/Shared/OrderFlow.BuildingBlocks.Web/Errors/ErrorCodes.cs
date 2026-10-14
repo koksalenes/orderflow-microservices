@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using OrderFlow.BuildingBlocks.Application.Validation;
 
 namespace OrderFlow.BuildingBlocks.Web.Errors;
 
@@ -15,6 +16,7 @@ public static class ErrorCodes
     public const string UnsupportedApiVersion = "common.unsupported_api_version";
     public const string TooManyRequests = "common.too_many_requests";
     public const string Unexpected = "common.unexpected";
+    public const string ValidationFailed = ValidationError.ErrorCode;
     public const string BadGateway = "gateway.bad_gateway";
     public const string ServiceUnavailable = "gateway.service_unavailable";
     public const string GatewayTimeout = "gateway.timeout";

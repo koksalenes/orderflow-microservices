@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../OrderFlow.Inventory.Domain/OrderFlow.Inventory.Domain.csproj" />
     <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.Application/OrderFlow.BuildingBlocks.Application.csproj" />
     <ProjectReference Include="../OrderFlow.Inventory.Contracts/OrderFlow.Inventory.Contracts.csproj" />

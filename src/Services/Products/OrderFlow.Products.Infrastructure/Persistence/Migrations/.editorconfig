@@ -1,0 +1,3 @@
+# EF Core migrations are generated code: analyzers and style rules do not apply.
+[*.cs]
+generated_code = true

@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Menu, Search, ShoppingBag } from "lucide-react";
 import { useAppSelector } from "@/app/hooks";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -24,12 +23,13 @@ export function SiteHeader() {
             >
                 {t("nav.home")}
             </Link>
-            <span className="flex cursor-not-allowed items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground/70">
+            <Link
+                to="/products"
+                search={{ page: 1 }}
+                className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground data-[status=active]:text-foreground"
+            >
                 {t("nav.catalog")}
-                <Badge variant="secondary" className="rounded-full px-1.5 text-[10px]">
-                    {t("badge.soon")}
-                </Badge>
-            </span>
+            </Link>
         </>
     );
 

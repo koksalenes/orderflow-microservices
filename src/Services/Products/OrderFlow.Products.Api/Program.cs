@@ -2,6 +2,7 @@ using OrderFlow.BuildingBlocks.ServiceDefaults;
 using OrderFlow.BuildingBlocks.ServiceDefaults.HealthChecks;
 using OrderFlow.BuildingBlocks.Web;
 using OrderFlow.BuildingBlocks.Web.Versioning;
+using OrderFlow.Products.Api.Products;
 using OrderFlow.Products.Infrastructure;
 
 if (HealthProbe.IsRequested(args))
@@ -19,8 +20,9 @@ var app = builder.Build();
 
 app.UseWebDefaults();
 app.MapDefaultEndpoints();
-app.MapVersionedGroup("products");
+app.MapVersionedGroup("products").MapProductEndpoints();
 
+await app.Services.MigrateProductsDatabaseAsync();
 await app.RunAsync();
 
 return 0;

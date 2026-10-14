@@ -1,0 +1,1013 @@
+[
+  {
+    "id": "019b76da-a800-7002-9e37-79b97f4a7c15",
+    "name": "iPhone 5s",
+    "description": "The iPhone 5s is a classic smartphone known for its compact design and advanced features during its release. While it's an older model, it still provides a reliable user experience.",
+    "category": "Smartphones",
+    "price": 199.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/smartphones/iphone-5s/1.webp",
+      "https://cdn.dummyjson.com/product-images/smartphones/iphone-5s/2.webp",
+      "https://cdn.dummyjson.com/product-images/smartphones/iphone-5s/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Apple"
+      },
+      {
+        "name": "SKU",
+        "value": "SMA-APP-IPH-121"
+      },
+      {
+        "name": "Weight",
+        "value": "2 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "5.29 × 18.38 × 17.72 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "Lifetime warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 month"
+      },
+      {
+        "name": "Return policy",
+        "value": "60 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a801-7004-bc6e-f372fe94f82a",
+    "name": "iPhone 6",
+    "description": "The iPhone 6 is a stylish and capable smartphone with a larger display and improved performance. It introduced new features and design elements, making it a popular choice in its time.",
+    "category": "Smartphones",
+    "price": 299.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/smartphones/iphone-6/1.webp",
+      "https://cdn.dummyjson.com/product-images/smartphones/iphone-6/2.webp",
+      "https://cdn.dummyjson.com/product-images/smartphones/iphone-6/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Apple"
+      },
+      {
+        "name": "SKU",
+        "value": "SMA-APP-IPH-122"
+      },
+      {
+        "name": "Weight",
+        "value": "7 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "11 × 9.1 × 9.67 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 month warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships overnight"
+      },
+      {
+        "name": "Return policy",
+        "value": "7 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a802-7007-9aa6-6d2c7ddf743f",
+    "name": "Apple MacBook Pro 14 Inch Space Grey",
+    "description": "The MacBook Pro 14 Inch in Space Grey is a powerful and sleek laptop, featuring Apple's M1 Pro chip for exceptional performance and a stunning Retina display.",
+    "category": "Laptops",
+    "price": 1999.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/laptops/apple-macbook-pro-14-inch-space-grey/1.webp",
+      "https://cdn.dummyjson.com/product-images/laptops/apple-macbook-pro-14-inch-space-grey/2.webp",
+      "https://cdn.dummyjson.com/product-images/laptops/apple-macbook-pro-14-inch-space-grey/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Apple"
+      },
+      {
+        "name": "SKU",
+        "value": "LAP-APP-APP-078"
+      },
+      {
+        "name": "Weight",
+        "value": "9 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "20.03 × 9.54 × 14.82 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "3 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 2 weeks"
+      },
+      {
+        "name": "Return policy",
+        "value": "90 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a803-7009-b8dd-e6e5fd29f054",
+    "name": "Asus Zenbook Pro Dual Screen Laptop",
+    "description": "The Asus Zenbook Pro Dual Screen Laptop is a high-performance device with dual screens, providing productivity and versatility for creative professionals.",
+    "category": "Laptops",
+    "price": 1799.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/laptops/asus-zenbook-pro-dual-screen-laptop/1.webp",
+      "https://cdn.dummyjson.com/product-images/laptops/asus-zenbook-pro-dual-screen-laptop/2.webp",
+      "https://cdn.dummyjson.com/product-images/laptops/asus-zenbook-pro-dual-screen-laptop/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Asus"
+      },
+      {
+        "name": "SKU",
+        "value": "LAP-ASU-ASU-079"
+      },
+      {
+        "name": "Weight",
+        "value": "9 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "16.6 × 11.49 × 10.89 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "3 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 month"
+      },
+      {
+        "name": "Return policy",
+        "value": "7 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a804-700c-9715-609f7c746c69",
+    "name": "iPad Mini 2021 Starlight",
+    "description": "The iPad Mini 2021 in Starlight is a compact and powerful tablet from Apple. Featuring a stunning Retina display, powerful A-series chip, and a sleek design, it offers a premium tablet experience.",
+    "category": "Tablets",
+    "price": 499.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/tablets/ipad-mini-2021-starlight/1.webp",
+      "https://cdn.dummyjson.com/product-images/tablets/ipad-mini-2021-starlight/2.webp",
+      "https://cdn.dummyjson.com/product-images/tablets/ipad-mini-2021-starlight/3.webp",
+      "https://cdn.dummyjson.com/product-images/tablets/ipad-mini-2021-starlight/4.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Apple"
+      },
+      {
+        "name": "SKU",
+        "value": "TAB-APP-IPA-159"
+      },
+      {
+        "name": "Weight",
+        "value": "5 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "17.03 × 5.34 × 29.62 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "2 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1-2 business days"
+      },
+      {
+        "name": "Return policy",
+        "value": "No return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a805-700e-b54c-da58fbbee87e",
+    "name": "Samsung Galaxy Tab S8 Plus Grey",
+    "description": "The Samsung Galaxy Tab S8 Plus in Grey is a high-performance Android tablet by Samsung. With a large AMOLED display, powerful processor, and S Pen support, it's ideal for productivity and entertainment.",
+    "category": "Tablets",
+    "price": 599.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/tablets/samsung-galaxy-tab-s8-plus-grey/1.webp",
+      "https://cdn.dummyjson.com/product-images/tablets/samsung-galaxy-tab-s8-plus-grey/2.webp",
+      "https://cdn.dummyjson.com/product-images/tablets/samsung-galaxy-tab-s8-plus-grey/3.webp",
+      "https://cdn.dummyjson.com/product-images/tablets/samsung-galaxy-tab-s8-plus-grey/4.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Samsung"
+      },
+      {
+        "name": "SKU",
+        "value": "TAB-SAM-SAM-160"
+      },
+      {
+        "name": "Weight",
+        "value": "1 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "6.11 × 25.85 × 26.85 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "3 months warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 2 weeks"
+      },
+      {
+        "name": "Return policy",
+        "value": "7 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a806-7011-9384-54127b096493",
+    "name": "Amazon Echo Plus",
+    "description": "The Amazon Echo Plus is a smart speaker with built-in Alexa voice control. It features premium sound quality and serves as a hub for controlling smart home devices.",
+    "category": "Mobile Accessories",
+    "price": 99.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/mobile-accessories/amazon-echo-plus/1.webp",
+      "https://cdn.dummyjson.com/product-images/mobile-accessories/amazon-echo-plus/2.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Amazon"
+      },
+      {
+        "name": "SKU",
+        "value": "MOB-AMA-AMA-099"
+      },
+      {
+        "name": "Weight",
+        "value": "5 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "12.68 × 15.24 × 27.46 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "6 months warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 week"
+      },
+      {
+        "name": "Return policy",
+        "value": "7 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a807-7013-b1bb-cdcbfa53e0a8",
+    "name": "Apple Airpods",
+    "description": "The Apple Airpods offer a seamless wireless audio experience. With easy pairing, high-quality sound, and Siri integration, they are perfect for on-the-go listening.",
+    "category": "Mobile Accessories",
+    "price": 129.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/1.webp",
+      "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/2.webp",
+      "https://cdn.dummyjson.com/product-images/mobile-accessories/apple-airpods/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Apple"
+      },
+      {
+        "name": "SKU",
+        "value": "MOB-APP-APP-100"
+      },
+      {
+        "name": "Weight",
+        "value": "4 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "25.79 × 18.38 × 11.53 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "3 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 3-5 business days"
+      },
+      {
+        "name": "Return policy",
+        "value": "No return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a808-7016-8ff3-4785799e5cbd",
+    "name": "Brown Leather Belt Watch",
+    "description": "The Brown Leather Belt Watch is a stylish timepiece with a classic design. Featuring a genuine leather strap and a sleek dial, it adds a touch of sophistication to your look.",
+    "category": "Men's Watches",
+    "price": 89.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/mens-watches/brown-leather-belt-watch/1.webp",
+      "https://cdn.dummyjson.com/product-images/mens-watches/brown-leather-belt-watch/2.webp",
+      "https://cdn.dummyjson.com/product-images/mens-watches/brown-leather-belt-watch/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Fashion Timepieces"
+      },
+      {
+        "name": "SKU",
+        "value": "MEN-FAS-BRO-093"
+      },
+      {
+        "name": "Weight",
+        "value": "10 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "16.65 × 6.15 × 20.18 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 month"
+      },
+      {
+        "name": "Return policy",
+        "value": "30 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a809-7018-ae2a-c13ef8e8d8d2",
+    "name": "Longines Master Collection",
+    "description": "The Longines Master Collection is an elegant and refined watch known for its precision and craftsmanship. With a timeless design, it's a symbol of luxury and sophistication.",
+    "category": "Men's Watches",
+    "price": 1499.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/1.webp",
+      "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/2.webp",
+      "https://cdn.dummyjson.com/product-images/mens-watches/longines-master-collection/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Longines"
+      },
+      {
+        "name": "SKU",
+        "value": "MEN-LON-LON-094"
+      },
+      {
+        "name": "Weight",
+        "value": "4 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "15.39 × 10.06 × 20.32 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 week warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1-2 business days"
+      },
+      {
+        "name": "Return policy",
+        "value": "7 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a80a-701b-8c62-3af8783354e7",
+    "name": "IWC Ingenieur Automatic Steel",
+    "description": "The IWC Ingenieur Automatic Steel watch is a durable and sophisticated timepiece. With a stainless steel case and automatic movement, it combines precision and style for watch enthusiasts.",
+    "category": "Women's Watches",
+    "price": 4999.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/womens-watches/iwc-ingenieur-automatic-steel/1.webp",
+      "https://cdn.dummyjson.com/product-images/womens-watches/iwc-ingenieur-automatic-steel/2.webp",
+      "https://cdn.dummyjson.com/product-images/womens-watches/iwc-ingenieur-automatic-steel/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "IWC"
+      },
+      {
+        "name": "SKU",
+        "value": "WOM-IWC-ING-190"
+      },
+      {
+        "name": "Weight",
+        "value": "3 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "24.77 × 24.66 × 6.09 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships overnight"
+      },
+      {
+        "name": "Return policy",
+        "value": "No return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a80b-701d-aa99-b4b1f77dd0fc",
+    "name": "Rolex Cellini Moonphase",
+    "description": "The Rolex Cellini Moonphase watch is a masterpiece of horology. Featuring a moon phase complication, it showcases the craftsmanship and elegance that Rolex is renowned for.",
+    "category": "Women's Watches",
+    "price": 15999.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/womens-watches/rolex-cellini-moonphase/1.webp",
+      "https://cdn.dummyjson.com/product-images/womens-watches/rolex-cellini-moonphase/2.webp",
+      "https://cdn.dummyjson.com/product-images/womens-watches/rolex-cellini-moonphase/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Rolex"
+      },
+      {
+        "name": "SKU",
+        "value": "WOM-ROL-ROL-191"
+      },
+      {
+        "name": "Weight",
+        "value": "10 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "12.5 × 20.63 × 25.04 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 month warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 week"
+      },
+      {
+        "name": "Return policy",
+        "value": "30 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a80c-7020-88d1-2e6b76c84d11",
+    "name": "Black Sun Glasses",
+    "description": "The Black Sun Glasses are a classic and stylish choice, featuring a sleek black frame and tinted lenses. They provide both UV protection and a fashionable look.",
+    "category": "Sunglasses",
+    "price": 29.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/sunglasses/black-sun-glasses/1.webp",
+      "https://cdn.dummyjson.com/product-images/sunglasses/black-sun-glasses/2.webp",
+      "https://cdn.dummyjson.com/product-images/sunglasses/black-sun-glasses/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Fashion Shades"
+      },
+      {
+        "name": "SKU",
+        "value": "SUN-FAS-BLA-154"
+      },
+      {
+        "name": "Weight",
+        "value": "1 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "18.51 × 15.69 × 10.11 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "No warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1-2 business days"
+      },
+      {
+        "name": "Return policy",
+        "value": "7 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a80d-7022-a708-a824f612c926",
+    "name": "Classic Sun Glasses",
+    "description": "The Classic Sun Glasses offer a timeless design with a neutral frame and UV-protected lenses. These sunglasses are versatile and suitable for various occasions.",
+    "category": "Sunglasses",
+    "price": 24.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/sunglasses/classic-sun-glasses/1.webp",
+      "https://cdn.dummyjson.com/product-images/sunglasses/classic-sun-glasses/2.webp",
+      "https://cdn.dummyjson.com/product-images/sunglasses/classic-sun-glasses/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Fashion Shades"
+      },
+      {
+        "name": "SKU",
+        "value": "SUN-FAS-CLA-155"
+      },
+      {
+        "name": "Weight",
+        "value": "8 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "19.87 × 16.73 × 11.07 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "6 months warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 month"
+      },
+      {
+        "name": "Return policy",
+        "value": "90 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a80e-7025-8540-21de755d453b",
+    "name": "Calvin Klein CK One",
+    "description": "CK One by Calvin Klein is a classic unisex fragrance, known for its fresh and clean scent. It's a versatile fragrance suitable for everyday wear.",
+    "category": "Fragrances",
+    "price": 49.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/1.webp",
+      "https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/2.webp",
+      "https://cdn.dummyjson.com/product-images/fragrances/calvin-klein-ck-one/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Calvin Klein"
+      },
+      {
+        "name": "SKU",
+        "value": "FRA-CAL-CAL-006"
+      },
+      {
+        "name": "Weight",
+        "value": "7 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "29.36 × 27.76 × 20.72 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 week warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships overnight"
+      },
+      {
+        "name": "Return policy",
+        "value": "90 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a80f-7027-a377-9b97f4a7c150",
+    "name": "Chanel Coco Noir Eau De",
+    "description": "Coco Noir by Chanel is an elegant and mysterious fragrance, featuring notes of grapefruit, rose, and sandalwood. Perfect for evening occasions.",
+    "category": "Fragrances",
+    "price": 129.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/1.webp",
+      "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/2.webp",
+      "https://cdn.dummyjson.com/product-images/fragrances/chanel-coco-noir-eau-de/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Chanel"
+      },
+      {
+        "name": "SKU",
+        "value": "FRA-CHA-CHA-007"
+      },
+      {
+        "name": "Weight",
+        "value": "7 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "24.5 × 25.7 × 25.98 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "3 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships overnight"
+      },
+      {
+        "name": "Return policy",
+        "value": "No return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a810-702a-81af-155173f23d65",
+    "name": "Annibale Colombo Bed",
+    "description": "The Annibale Colombo Bed is a luxurious and elegant bed frame, crafted with high-quality materials for a comfortable and stylish bedroom.",
+    "category": "Furniture",
+    "price": 1899.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/1.webp",
+      "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/2.webp",
+      "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-bed/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Annibale Colombo"
+      },
+      {
+        "name": "SKU",
+        "value": "FUR-ANN-ANN-011"
+      },
+      {
+        "name": "Weight",
+        "value": "10 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "28.16 × 25.36 × 17.28 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 month"
+      },
+      {
+        "name": "Return policy",
+        "value": "No return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a811-702c-9fe6-8f0af33cb97a",
+    "name": "Annibale Colombo Sofa",
+    "description": "The Annibale Colombo Sofa is a sophisticated and comfortable seating option, featuring exquisite design and premium upholstery for your living room.",
+    "category": "Furniture",
+    "price": 2499.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/1.webp",
+      "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/2.webp",
+      "https://cdn.dummyjson.com/product-images/furniture/annibale-colombo-sofa/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Annibale Colombo"
+      },
+      {
+        "name": "SKU",
+        "value": "FUR-ANN-ANN-012"
+      },
+      {
+        "name": "Weight",
+        "value": "6 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "12.75 × 20.55 × 19.06 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "Lifetime warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 week"
+      },
+      {
+        "name": "Return policy",
+        "value": "7 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a812-702e-be1e-08c47287358f",
+    "name": "Decoration Swing",
+    "description": "The Decoration Swing is a charming addition to your home decor. Crafted with intricate details, it adds a touch of elegance and whimsy to any room.",
+    "category": "Home Decoration",
+    "price": 59.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/home-decoration/decoration-swing/1.webp",
+      "https://cdn.dummyjson.com/product-images/home-decoration/decoration-swing/2.webp",
+      "https://cdn.dummyjson.com/product-images/home-decoration/decoration-swing/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "SKU",
+        "value": "HOM-BRD-DEC-043"
+      },
+      {
+        "name": "Weight",
+        "value": "4 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "23.84 × 15.19 × 26.05 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 week warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 month"
+      },
+      {
+        "name": "Return policy",
+        "value": "90 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a813-7031-9c55-827df1d1b1a4",
+    "name": "Family Tree Photo Frame",
+    "description": "The Family Tree Photo Frame is a sentimental and stylish way to display your cherished family memories. With multiple photo slots, it tells the story of your loved ones.",
+    "category": "Home Decoration",
+    "price": 29.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/home-decoration/family-tree-photo-frame/1.webp"
+    ],
+    "specifications": [
+      {
+        "name": "SKU",
+        "value": "HOM-BRD-FAM-044"
+      },
+      {
+        "name": "Weight",
+        "value": "1 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "17.27 × 14.81 × 29.11 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 month warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 2 weeks"
+      },
+      {
+        "name": "Return policy",
+        "value": "No return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a814-7033-ba8c-fc37711c2db9",
+    "name": "Blue Women's Handbag",
+    "description": "The Blue Women's Handbag is a stylish and spacious accessory for everyday use. With a vibrant blue color and multiple compartments, it combines fashion and functionality.",
+    "category": "Women's Bags",
+    "price": 49.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/womens-bags/blue-women's-handbag/1.webp",
+      "https://cdn.dummyjson.com/product-images/womens-bags/blue-women's-handbag/2.webp",
+      "https://cdn.dummyjson.com/product-images/womens-bags/blue-women's-handbag/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Fashionista"
+      },
+      {
+        "name": "SKU",
+        "value": "WOM-FAS-BLU-172"
+      },
+      {
+        "name": "Weight",
+        "value": "7 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "14.12 × 11.89 × 25.69 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "1 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 week"
+      },
+      {
+        "name": "Return policy",
+        "value": "7 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a815-7036-98c4-75f0f066a9ce",
+    "name": "Heshe Women's Leather Bag",
+    "description": "The Heshe Women's Leather Bag is a luxurious and high-quality leather bag for the sophisticated woman. With a timeless design and durable craftsmanship, it's a versatile accessory.",
+    "category": "Women's Bags",
+    "price": 129.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/womens-bags/heshe-women's-leather-bag/1.webp",
+      "https://cdn.dummyjson.com/product-images/womens-bags/heshe-women's-leather-bag/2.webp",
+      "https://cdn.dummyjson.com/product-images/womens-bags/heshe-women's-leather-bag/3.webp"
+    ],
+    "specifications": [
+      {
+        "name": "Brand",
+        "value": "Heshe"
+      },
+      {
+        "name": "SKU",
+        "value": "WOM-HES-HES-173"
+      },
+      {
+        "name": "Weight",
+        "value": "3 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "28.66 × 20.56 × 6.62 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "5 year warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships overnight"
+      },
+      {
+        "name": "Return policy",
+        "value": "90 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a816-7038-b6fb-efaa6fb125e3",
+    "name": "American Football",
+    "description": "The American Football is a classic ball used in American football games. It is designed for throwing and catching, making it an essential piece of equipment for the sport.",
+    "category": "Sports Accessories",
+    "price": 19.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/sports-accessories/american-football/1.webp"
+    ],
+    "specifications": [
+      {
+        "name": "SKU",
+        "value": "SPO-BRD-AME-137"
+      },
+      {
+        "name": "Weight",
+        "value": "2 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "6.88 × 5.82 × 21.96 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "6 months warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 month"
+      },
+      {
+        "name": "Return policy",
+        "value": "90 days return policy"
+      }
+    ]
+  },
+  {
+    "id": "019b76da-a817-703b-9533-6963eefba1f8",
+    "name": "Baseball Ball",
+    "description": "The Baseball Ball is a standard baseball used in baseball games. It features a durable leather cover and is designed for pitching, hitting, and fielding in the game of baseball.",
+    "category": "Sports Accessories",
+    "price": 8.99,
+    "currency": "USD",
+    "images": [
+      "https://cdn.dummyjson.com/product-images/sports-accessories/baseball-ball/1.webp"
+    ],
+    "specifications": [
+      {
+        "name": "SKU",
+        "value": "SPO-BRD-BAS-138"
+      },
+      {
+        "name": "Weight",
+        "value": "5 kg"
+      },
+      {
+        "name": "Dimensions",
+        "value": "14.42 × 22.65 × 15.89 cm"
+      },
+      {
+        "name": "Warranty",
+        "value": "6 months warranty"
+      },
+      {
+        "name": "Shipping",
+        "value": "Ships in 1 week"
+      },
+      {
+        "name": "Return policy",
+        "value": "30 days return policy"
+      }
+    ]
+  }
+]

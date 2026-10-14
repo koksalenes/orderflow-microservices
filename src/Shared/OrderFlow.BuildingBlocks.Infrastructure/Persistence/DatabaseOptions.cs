@@ -8,4 +8,6 @@ public sealed class DatabaseOptions
 
     [Required]
     public string ConnectionString { get; init; } = string.Empty;
+
+    public bool MigrateOnStartup { get; init; }
 }
