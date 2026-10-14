@@ -17,7 +17,9 @@ internal static class ProductEndpoints
         group
             .MapGet("", GetProductsAsync)
             .WithName("GetProducts")
-            .WithSummary("Lists the catalog, one page at a time.");
+            .WithSummary(
+                "Lists the catalog, one page at a time; q searches name, category, description, and specifications."
+            );
 
         group
             .MapGet("{id:guid}", GetProductByIdAsync)
@@ -33,10 +35,11 @@ internal static class ProductEndpoints
         IQueryHandler<GetProductsQuery, PagedResult<ProductSummaryDto>> handler,
         CancellationToken cancellationToken,
         [FromQuery] int page = 1,
-        [FromQuery] int pageSize = PageRequest.DefaultPageSize
+        [FromQuery] int pageSize = PageRequest.DefaultPageSize,
+        [FromQuery] string? q = null
     ) =>
         (
-            await handler.HandleAsync(new GetProductsQuery(page, pageSize), cancellationToken)
+            await handler.HandleAsync(new GetProductsQuery(page, pageSize, q), cancellationToken)
         ).ToHttpResult();
 
     private static async Task<Results<Ok<ProductDto>, ProblemHttpResult>> GetProductByIdAsync(

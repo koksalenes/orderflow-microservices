@@ -21,4 +21,21 @@ public static class HandlerRegistrationExtensions
 
         return services;
     }
+
+    public static IServiceCollection AddCommandHandler<TCommand, TResult, THandler>(
+        this IServiceCollection services
+    )
+        where TCommand : notnull
+        where THandler : class, ICommandHandler<TCommand, TResult>
+    {
+        services.AddScoped<THandler>();
+        services.AddScoped<ICommandHandler<TCommand, TResult>>(provider =>
+            ActivatorUtilities.CreateInstance<ValidationCommandHandlerDecorator<TCommand, TResult>>(
+                provider,
+                provider.GetRequiredService<THandler>()
+            )
+        );
+
+        return services;
+    }
 }

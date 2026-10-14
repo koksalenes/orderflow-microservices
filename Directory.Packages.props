@@ -56,6 +56,11 @@
     <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.19.0" />
     <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.19.0" />
   </ItemGroup>
+  <ItemGroup Label="Messaging">
+    <PackageVersion Include="RabbitMQ.Client" Version="7.2.1" />
+    <PackageVersion Include="MailKit" Version="4.18.0" />
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
+  </ItemGroup>
   <ItemGroup Label="Caching">
     <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.12" />
     <PackageVersion Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="10.0.12" />

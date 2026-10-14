@@ -11,11 +11,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 builder.Services.AddPaymentsInfrastructure();
+builder.Services.AddPaymentsMessaging();
 
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
+await app.Services.WaitForPaymentsDatabaseAsync();
 await app.RunAsync();
 
 return 0;

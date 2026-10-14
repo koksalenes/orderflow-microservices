@@ -32,11 +32,13 @@ export type StockLevels = Record<string, number>;
 export const catalogPageSize = 12;
 export const featuredCount = 8;
 
-export const productsQueryOptions = (page: number, pageSize = catalogPageSize) =>
+export const maxSearchLength = 100;
+
+export const productsQueryOptions = (page: number, pageSize = catalogPageSize, q = "") =>
     queryOptions({
-        queryKey: ["products", "list", { page, pageSize }],
+        queryKey: ["products", "list", { page, pageSize, q }],
         queryFn: async ({ signal }) =>
-            (await http.get<Page<ProductSummary>>("/api/v1/products", { params: { page, pageSize }, signal })).data,
+            (await http.get<Page<ProductSummary>>("/api/v1/products", { params: { page, pageSize, q: q || undefined }, signal })).data,
         placeholderData: keepPreviousData,
         staleTime: 5 * 60_000
     });

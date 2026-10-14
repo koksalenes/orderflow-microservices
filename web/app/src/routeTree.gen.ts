@@ -14,6 +14,8 @@ import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as ProductsIndexRouteImport } from './routes/products/index'
 import { Route as ProductsProductIdRouteImport } from './routes/products/$productId'
+import { Route as AuthenticatedWalletIndexRouteImport } from './routes/_authenticated/wallet/index'
+import { Route as AuthenticatedWalletCheckoutRouteImport } from './routes/_authenticated/wallet/checkout'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -39,18 +41,34 @@ const ProductsProductIdRoute = ProductsProductIdRouteImport.update({
   path: '/products/$productId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedWalletIndexRoute =
+  AuthenticatedWalletIndexRouteImport.update({
+    id: '/wallet/',
+    path: '/wallet/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedWalletCheckoutRoute =
+  AuthenticatedWalletCheckoutRouteImport.update({
+    id: '/wallet/checkout',
+    path: '/wallet/checkout',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/account': typeof AuthenticatedAccountRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products/': typeof ProductsIndexRoute
+  '/wallet/checkout': typeof AuthenticatedWalletCheckoutRoute
+  '/wallet/': typeof AuthenticatedWalletIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/account': typeof AuthenticatedAccountRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products': typeof ProductsIndexRoute
+  '/wallet/checkout': typeof AuthenticatedWalletCheckoutRoute
+  '/wallet': typeof AuthenticatedWalletIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -59,12 +77,26 @@ export interface FileRoutesById {
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/products/$productId': typeof ProductsProductIdRoute
   '/products/': typeof ProductsIndexRoute
+  '/_authenticated/wallet/checkout': typeof AuthenticatedWalletCheckoutRoute
+  '/_authenticated/wallet/': typeof AuthenticatedWalletIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/account' | '/products/$productId' | '/products/'
+  fullPaths:
+    | '/'
+    | '/account'
+    | '/products/$productId'
+    | '/products/'
+    | '/wallet/checkout'
+    | '/wallet/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/account' | '/products/$productId' | '/products'
+  to:
+    | '/'
+    | '/account'
+    | '/products/$productId'
+    | '/products'
+    | '/wallet/checkout'
+    | '/wallet'
   id:
     | '__root__'
     | '/'
@@ -72,6 +104,8 @@ export interface FileRouteTypes {
     | '/_authenticated/account'
     | '/products/$productId'
     | '/products/'
+    | '/_authenticated/wallet/checkout'
+    | '/_authenticated/wallet/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -118,15 +152,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductsProductIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/wallet/': {
+      id: '/_authenticated/wallet/'
+      path: '/wallet'
+      fullPath: '/wallet/'
+      preLoaderRoute: typeof AuthenticatedWalletIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/wallet/checkout': {
+      id: '/_authenticated/wallet/checkout'
+      path: '/wallet/checkout'
+      fullPath: '/wallet/checkout'
+      preLoaderRoute: typeof AuthenticatedWalletCheckoutRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedWalletCheckoutRoute: typeof AuthenticatedWalletCheckoutRoute
+  AuthenticatedWalletIndexRoute: typeof AuthenticatedWalletIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedWalletCheckoutRoute: AuthenticatedWalletCheckoutRoute,
+  AuthenticatedWalletIndexRoute: AuthenticatedWalletIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

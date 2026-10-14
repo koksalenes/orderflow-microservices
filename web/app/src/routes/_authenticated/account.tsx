@@ -1,10 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { BadgeCheck, CircleAlert, LogOut, PackageOpen, ShieldCheck } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, BadgeCheck, CircleAlert, LogOut, PackageOpen, ShieldCheck, WalletCards } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { signOut } from "@/features/auth/session";
+import { walletQueryOptions } from "@/features/wallet/wallet-api";
+import { formatPrice } from "@/lib/format";
 import { useTranslation } from "@/i18n/use-translation";
 import { initials } from "@/lib/utils";
 
@@ -14,7 +18,8 @@ export const Route = createFileRoute("/_authenticated/account")({
 
 function AccountPage() {
     const { session } = Route.useRouteContext();
-    const { t } = useTranslation();
+    const { t, locale } = useTranslation();
+    const wallet = useQuery(walletQueryOptions);
 
     return (
         <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6 lg:px-8">
@@ -69,6 +74,26 @@ function AccountPage() {
                 </Card>
 
                 <div className="flex flex-col gap-6">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <WalletCards className="size-4 text-primary" /> {t("wallet.title")}
+                            </CardTitle>
+                            <CardDescription>{t("wallet.balance")}</CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex items-center justify-between gap-4">
+                            {wallet.data === undefined ? (
+                                <Skeleton className="h-8 w-28" />
+                            ) : (
+                                <span className="text-2xl font-semibold">{formatPrice(wallet.data.balance, wallet.data.currency, locale)}</span>
+                            )}
+                            <Button asChild variant="outline">
+                                <Link to="/wallet" search={{}}>
+                                    {t("wallet.open")} <ArrowRight />
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">

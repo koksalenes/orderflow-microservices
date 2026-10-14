@@ -1,7 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <EmbeddedResource Include="Deposits/Templates/*.html" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../OrderFlow.Notifications.Domain/OrderFlow.Notifications.Domain.csproj" />
     <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.Application/OrderFlow.BuildingBlocks.Application.csproj" />
     <ProjectReference Include="../OrderFlow.Notifications.Contracts/OrderFlow.Notifications.Contracts.csproj" />
+    <ProjectReference Include="../../Payments/OrderFlow.Payments.Contracts/OrderFlow.Payments.Contracts.csproj" />
   </ItemGroup>
 </Project>

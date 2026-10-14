@@ -23,7 +23,7 @@ public static class ResultHttpExtensions
         var problem = error is ValidationError validation
             ? new HttpValidationProblemDetails(
                 validation.Errors.ToDictionary(
-                    pair => JsonNamingPolicy.CamelCase.ConvertName(pair.Key),
+                    pair => CamelCasePath(pair.Key),
                     pair => pair.Value,
                     StringComparer.Ordinal
                 )
@@ -41,6 +41,9 @@ public static class ResultHttpExtensions
 
         return TypedResults.Problem(problem);
     }
+
+    private static string CamelCasePath(string propertyPath) =>
+        string.Join('.', propertyPath.Split('.').Select(JsonNamingPolicy.CamelCase.ConvertName));
 
     private static int StatusCode(ErrorType type) =>
         type switch

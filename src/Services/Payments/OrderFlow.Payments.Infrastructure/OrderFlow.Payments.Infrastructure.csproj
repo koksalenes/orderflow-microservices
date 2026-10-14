@@ -1,5 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
+    <PackageReference Include="Dapper" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../OrderFlow.Payments.Application/OrderFlow.Payments.Application.csproj" />
     <ProjectReference Include="../../../Shared/OrderFlow.BuildingBlocks.Infrastructure/OrderFlow.BuildingBlocks.Infrastructure.csproj" />
   </ItemGroup>

@@ -23,6 +23,7 @@ internal static class TelemetryExtensions
                         options.Filter = context => !IsHealthRequest(context)
                     )
                     .AddHttpClientInstrumentation()
+                    .AddSource(MessagingTelemetry.ActivitySourceName)
             )
             .WithMetrics(metrics =>
                 metrics

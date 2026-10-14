@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { LogOut, PackageOpen, UserRound } from "lucide-react";
+import { LogOut, PackageOpen, UserRound, WalletCards } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -58,6 +58,11 @@ export function UserMenu() {
                 <DropdownMenuItem asChild>
                     <Link to="/account">
                         <UserRound /> {t("auth.myAccount")}
+                    </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                    <Link to="/wallet" search={{}}>
+                        <WalletCards /> {t("wallet.nav")}
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem disabled>

@@ -277,6 +277,10 @@ services:
     environment:
       <<: *app-environment
       Database__ConnectionString: Host=postgres;Database=payments_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      # JWT validation: issuer as the browser sees Keycloak, keys fetched over the compose network.
+      Authentication__Authority: http://localhost:${KEYCLOAK_PORT:-8080}/realms/orderflow
+      Authentication__MetadataAddress: http://keycloak:8080/realms/orderflow/.well-known/openid-configuration
+      Authentication__RequireHttpsMetadata: "false"
 
   payments-worker:
     <<: *app
@@ -289,6 +293,14 @@ services:
     environment:
       <<: *app-environment
       Database__ConnectionString: Host=postgres;Database=payments_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Username: ${RABBITMQ_DEFAULT_USER}
+      RabbitMq__Password: ${RABBITMQ_DEFAULT_PASS}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
 
   notifications-api:
     <<: *app
@@ -313,6 +325,19 @@ services:
     environment:
       <<: *app-environment
       Database__ConnectionString: Host=postgres;Database=notifications_db;Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      RabbitMq__Host: rabbitmq
+      RabbitMq__Username: ${RABBITMQ_DEFAULT_USER}
+      RabbitMq__Password: ${RABBITMQ_DEFAULT_PASS}
+      Smtp__Host: mailpit
+      Smtp__Port: "1025"
+      Storefront__BaseUrl: http://localhost:${WEB_PORT:-3000}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+      mailpit:
+        condition: service_healthy
 
 volumes:
   postgres-data:
